@@ -1,16 +1,38 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	line-height: 1;
+}
+
+
+
+/* @group head */
+
 h1 {
 	position: absolute;
 	bottom: 3em;
-	left: 1em;
+	left: 0em;
 	z-index: 1000;
-	
+
+	padding: 0.25em 0.5em 0.25em 2em;
+
+	font-size: 4em;
+	font-weight: normal;
+	color: #fff;
+	background-color: #2d3841;
 }
 
 h1.hide {
-	z-index: 0;
-	visibility: hidden;
-	-webkit-transition: opacity 1s ease-out;
+	left: -99em;
+	transition: left 2s;
+	-moz-transition: left 2s; /* Firefox 4 */
+	-webkit-transition: left 2s; /* Safari and Chrome */
+	-o-transition: left 2s; /* Opera */
 }
+
+/* @end */
+
+/* @group map */
 
 section#map {
 	position: absolute;
@@ -20,3 +42,121 @@ section#map {
 	left: 0;
 	z-index: 500;
 }
+
+/* @end */
+
+
+/* @group toolbox */
+
+div#toolbox {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	z-index: 1000;
+}
+
+	div#toolbox div.tool {
+		position: relative;
+
+		float: left;
+		margin-left: 15px;
+		overflow: hidden;
+		width: 35px;
+
+		transition: width 0.5s;
+		-moz-transition: width 0.5s; /* Firefox 4 */
+		-webkit-transition: width 0.5s; /* Safari and Chrome */
+		-o-transition: width 0.5s; /* Opera */
+	}
+	
+		div#toolbox div.tool button {
+			color: #fff;
+			background-color: #2d3841;
+			border: 0;
+			margin: 0;
+			padding: 10px;
+			line-height: 15px;
+			float: right;
+			position: relative;
+			font-size: 1em;
+			z-index: 1;
+
+			transition: background-color 0.5s ease;
+			-moz-transition: background-color 0.5s ease; /* Firefox 4 */
+			-webkit-transition: background-color 0.5s ease; /* Safari and Chrome */
+			-o-transition: background-color 0.5s ease; /* Opera */
+		}
+		
+		div#toolbox div.tool button:hover {
+			background-color: #3f4f5a;
+			cursor:pointer;
+			
+		}
+		
+		div#toolbox div.tool.loading button,
+		div#toolbox div.tool.active button {
+			background-color: #abc6c8;
+		}
+		
+			div#toolbox div.tool button span {
+				display: inline-block;
+				width: 15px;
+			}
+
+		div#toolbox div.tool div.spinner,
+		div#toolbox div.tool div.content {
+			width: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+			
+		/**
+		 * LOADING STATE
+		 */
+		div#toolbox div.tool.loading {
+			width: 71px;
+		}
+		
+			div#toolbox div.tool div.spinner {
+				width: 0;
+				height: 35px;
+				background: #abc6c8 url(img/ajax-loader.gif) no-repeat 50% 50%;
+				border-right: 1px solid #96aeb0;
+				transition: width 0.5s ease;
+				-moz-transition: width 0.5s ease; /* Firefox 4 */
+				-webkit-transition: width 0.5s ease; /* Safari and Chrome */
+				-o-transition: width 0.5s ease; /* Opera */
+			}
+
+			div#toolbox div.tool div.spinner.loading {
+				width: 35px;
+			}
+		
+		/**
+		 * ACTIVE
+		 */
+		div#toolbox div.tool.active {
+			width: 366px;
+		}
+		
+			div#toolbox div.tool.active div.content {	
+				width: 300px;
+				padding: 10px;
+				background-color: #abc6c8;
+				float: right;
+				color: #2d3841;			
+				border-right: 1px solid #96aeb0;
+			}
+			
+				div#toolbox div.tool.active div.content h2 {
+					font-size: 1em;
+					font-weight: normal;
+					margin: 0 0 10px 0;
+					padding-bottom: 10px;
+					border-bottom: 1px solid #96aeb0;
+				}
+			
+			
+
+/* @end */

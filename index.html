@@ -17,14 +17,28 @@
 	<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.1"></script>	
 	<link rel="stylesheet" type="text/css" href="style.css" media="all" />
 
+	<script type="text/javascript" src="js/event.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
 	<script type="text/javascript" src="js/control.js"></script>
 	
 </head>
 
 <body>
-	<!--<h1>The HTML5 Map Viewer</h1>-->
+	<h1>The HTML5 Map Viewer</h1>
 	<section id="map"></section>
+	<div id="toolbox">
+		<!--<div class="tool"><button><span>1</span></button></div>
+		<div class="tool"><button><span>2</span></button></div>
+		<div class="tool"><button><span>3</span></button></div>-->
+		<div id="layer" class="tool">
+			<button><span>4</span></button>
+			<!--<div class="content">
+				<h2>Search</h2>
+				<input type="text">
+			</div>-->
+			<div class="spinner"></div>
+		</div>
+	</div>
 
 
 </body>
