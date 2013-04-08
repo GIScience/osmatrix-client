@@ -2,15 +2,20 @@ var Controller = (function(){
 
 	var map;
 
-	var permalink;
-
 	/**
 	 * [initialize description]
 	 */
 	function initialize() {
+		var permaLink = Permalink.parse(document.URL);
+
 		map = new Map('map');
+		if (permaLink) map.moveTo(permaLink.lonlat, permaLink.zoom);
+		
 		map.register('layer:loadStart', handleMapLoadStart);
 		map.register('layer:loadEnd', handleMapLoadEnd);
+		map.register('map:moved', handleMapMove);
+
+		$('.tool > button').click(handleButtonClick);
 
 		setTimeout(function() {
 			$('h1').addClass('hide');
@@ -22,7 +27,7 @@ var Controller = (function(){
 	 * @return {[type]} [description]
 	 */
 	function handleMapLoadStart() {
-		$('#layer').addClass('loading');
+		$('#layer button').addClass('loading');
 		$('#layer .spinner').addClass('loading');
 	}
 
@@ -31,8 +36,18 @@ var Controller = (function(){
 	 * @return {[type]} [description]
 	 */
 	function handleMapLoadEnd() {
-		$('#layer').removeClass('loading');
+		$('#layer button').removeClass('loading');
 		$('#layer .spinner').removeClass('loading');
+	}
+
+	function handleMapMove(mapState) {
+		Permalink.update(mapState.zoom, mapState.lon, mapState.lat);
+	}
+
+	function handleButtonClick() {
+		$(this).toggleClass('active');
+		$(this).siblings('.content').toggleClass('active');
+		
 	}
 
 	var controller = function() {};

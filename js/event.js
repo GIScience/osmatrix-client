@@ -24,16 +24,14 @@ var EventEmitter = (function() {
 	 * [emit description]
 	 * @param  {String} event [description]
 	 */
-	function emit(ev) {
+	function emit(ev, eventObj) {
 		if (this.events[ev]) {
 			for (var i = 0; i < this.events[ev].length; i++) {
-				this.events[ev][i]();
+				this.events[ev][i](eventObj);
 			}
 		}
 	}
-
-
-
+	
 	eventEmitter.prototype.register = register;
 	eventEmitter.prototype.emit = emit;
 

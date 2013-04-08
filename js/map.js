@@ -5,24 +5,59 @@ var Map = (function() {
 	 * @param  {[type]} container [description]
 	 */
 	function map(container) {
-		var _self = this;
+		var self = this;
 
-		var theMap = L.map(container).setView([51.505, -0.09], 13);
+		/**
+		 * [emitMapMoveEvent description]
+		 */
+		function emitMapMoveEvent() {
+			self.emit('map:moved', {
+				zoom: self.theMap.getZoom(),
+				lat: self.theMap.getCenter().lat,
+				lon: self.theMap.getCenter().lng
+			});
+		}
+
+		/**
+		 * [emitLayerLoadEvent description]
+		 */
+		function emitLayerLoadStartEvent() {
+			self.emit('layer:loadStart');
+		}
+
+		/**
+		 * [emitLayerLoadEndEvent description]
+		 */
+		function emitLayerLoadEndEvent() {
+			self.emit('layer:loadEnd');
+		}
+
+
+		this.theMap = L.map(container).setView([51.505, -0.09], 13);
 
 		var tiledLayer = new L.StamenTileLayer("toner-lite");
-		theMap.addLayer(tiledLayer);
+		this.theMap.addLayer(tiledLayer);
 
-		var matrixLayer = L.tileLayer('http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/totalNumbOfPOIs/diff/{z}/{x}/{y}?start=2&end=4', {
-    		maxZoom: 18
-		});
-		theMap.addLayer(matrixLayer);
+		this.theMap.on('zoomend', emitMapMoveEvent);
+		this.theMap.on('moveend', emitMapMoveEvent);
 
-		matrixLayer.on('loading', function() {_self.emit('layer:loadStart')});
-		matrixLayer.on('load', function() {_self.emit('layer:loadEnd')});
+		// var matrixLayer = L.tileLayer('http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/totalNumbOfPOIs/diff/{z}/{x}/{y}?start=2&end=4', {
+		// 	maxZoom: 18
+		// });
+		// _self.theMap.addLayer(matrixLayer);
+
+		// matrixLayer.on('loading', function() {_self.emit('layer:loadStart')});
+		// matrixLayer.on('load', function() {_self.emit('layer:loadEnd')});
+	}
+
+	function moveTo(lonlat, zoom) {
+		if (lonlat) this.theMap.panTo(lonlat);
+		if (zoom) this.theMap.setZoom(zoom);
 	}
 
 	map.prototype = new EventEmitter();
 	map.prototype.constructor = map;
+	map.prototype.moveTo = moveTo;
 
 	return map;
 })();
