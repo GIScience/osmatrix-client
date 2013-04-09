@@ -9,12 +9,7 @@ var Geolocator = (function() {
 	}
 
 	function locate(locationSuccess, locationError, locationNotSupported) {
-		var self = this;
-
-		if (navigator.geolocation) navigator.geolocation.getCurrentPosition(
-			locationSuccess([position.coords.longitude, position.coords.latitude]), 
-			emitLocationError(error)
-		);
+		if (navigator.geolocation) navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
 		else locationNotSupported();
 	}
 
