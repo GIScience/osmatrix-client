@@ -2,7 +2,8 @@ var Controller = (function(){
 
 	var TOOLS = {
 		geolocate: 'geolocate',
-		layer: 'layer'
+		layer: 'layer',
+		geocode: 'searchPlace'
 	}
 
 	var map;
@@ -18,6 +19,7 @@ var Controller = (function(){
 		map.register('map:moved', handleMapMove);
 
 		$('.tool > button').click(handleButtonClick);
+		$('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
 
 		setTimeout(function() {
 			$('h1').addClass('hide');
@@ -70,6 +72,30 @@ var Controller = (function(){
 	 * EVENT HANDLERS
 	 * *********************************************************************/
 
+	 /**
+	 * [handleButtonClick description]
+	 * @return {[type]} [description]
+	 */
+	function handleButtonClick() {
+		var toolId = $(this).parent().attr('id')
+		if (toolId === TOOLS.geolocate) {
+			setLoadingState(true, TOOLS.geolocate);
+			getCurrentPosition();
+		} else {
+			toggleActiveState(toolId);
+		}
+	}
+
+	/**
+	 * [handleFormType description]
+	 */
+	function handleFormType(event) {
+		if (event.keyCode === 13) {
+			setLoadingState(true, TOOLS.geocode);
+			Geocoder.find($(this).val(), handleGeocodeResults);
+		}
+	}
+
 	/**
 	 * [handleMapLoadStart description]
 	 * @return {[type]} [description]
@@ -93,20 +119,6 @@ var Controller = (function(){
 	 */
 	function handleMapMove(mapState) {
 		Permalink.update(mapState.zoom, mapState.lon, mapState.lat);
-	}
-
-	/**
-	 * [handleButtonClick description]
-	 * @return {[type]} [description]
-	 */
-	function handleButtonClick() {
-		var toolId = $(this).parent().attr('id')
-		if (toolId === TOOLS.geolocate) {
-			setLoadingState(true, TOOLS.geolocate);
-			getCurrentPosition();
-		} else {
-			toggleActiveState(toolId);
-		}
 	}
 
 	/**
@@ -144,12 +156,38 @@ var Controller = (function(){
 
 	/**
 	 * [handleGeolocateNoSupport description]
-	 * @return {[type]} [description]
 	 */
 	function handleGeolocateNoSupport() {
 		setLoadingState(false, TOOLS.geolocate);
 		$(TOOLS.geolocate).hide();
 		alert('Geolocation API is not supported by your browser.')
+	}
+
+	/**
+	 * [handleGeocodeResults description]
+	 * @param  {[type]} results [description]
+	 */
+	function handleGeocodeResults(results) {
+		var linkBase = document.URL.split('#')[0];
+		$('#' + TOOLS.geocode + ' ul.resultList').children().remove();
+		
+		for (var i = 0; i < results.length; i++) {
+			var address = results[i];
+			var link = linkBase + "#10/" + parseFloat(address.lon) + "/" + parseFloat(address.lat);
+			$('#' + TOOLS.geocode + ' ul.resultList').append('<li><a href="' + link + '">' + address.display_name + '</a></li>')
+		}
+
+		$('#' + TOOLS.geocode + ' ul.resultList li a').click(handleGeocodeLinkClick);
+
+		setLoadingState(false, TOOLS.geocode);
+	}
+
+	/**
+	 * [handleGeocodeLinkClick description]
+	 */
+	function handleGeocodeLinkClick() {
+		map.moveTo(Permalink.parse($(this).attr('href')).lonlat);
+		return false;
 	}
 
 	var controller = function() {};
