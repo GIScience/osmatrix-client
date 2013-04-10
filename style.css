@@ -192,18 +192,20 @@ div#searchPlace > div.content > ul.resultList {
 	border-top-width: 0;
 	height: auto;
 	max-height: 550px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 	div#searchPlace > div.content > ul.resultList li {
 		
 	}
 	
+    div#searchPlace > div.content > ul.resultList li.noResult,
 	div#searchPlace > div.content > ul.resultList li a {
 		display: block;
 		color: #2d3841;
 		text-decoration: none;
 		padding: 7px 15px;
+        line-height: 1.2;
 	}
 	
 	div#searchPlace > div.content > ul.resultList li a:hover {

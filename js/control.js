@@ -1,12 +1,10 @@
-var Controller = (function(){
+var Controller = (function () {
 
 	var TOOLS = {
 		geolocate: 'geolocate',
 		layer: 'layer',
 		geocode: 'searchPlace'
-	}
-
-	var map;
+	}, map;
 
 	/**
 	 * [initialize description]
@@ -21,7 +19,7 @@ var Controller = (function(){
 		$('.tool > button').click(handleButtonClick);
 		$('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
 
-		setTimeout(function() {
+		setTimeout(function () {
 			$('h1').addClass('hide');
 		}, 5000);
 
@@ -33,8 +31,11 @@ var Controller = (function(){
 	 */
 	function setInitialMapLocation() {
 		var permaLink = Permalink.parse(document.URL);
-		if (permaLink) map.moveTo(permaLink.lonlat, permaLink.zoom);
-		else getCurrentPosition();
+		if (permaLink) {
+            map.moveTo(permaLink.lonlat, permaLink.zoom);
+        } else {
+            getCurrentPosition();
+        }
 	}
 
 	/**
@@ -77,7 +78,7 @@ var Controller = (function(){
 	 * @return {[type]} [description]
 	 */
 	function handleButtonClick() {
-		var toolId = $(this).parent().attr('id')
+		var toolId = $(this).parent().attr('id');
 		if (toolId === TOOLS.geolocate) {
 			setLoadingState(true, TOOLS.geolocate);
 			getCurrentPosition();
@@ -138,20 +139,20 @@ var Controller = (function(){
 	 */
 	function handleGeolocateError(error) {
 		setLoadingState(false, TOOLS.geolocate);
-		switch(error.code) {
-			case error.UNKNOWN_ERROR:
-				alert('The location acquisition process failed');
-				break;
-			case error.PERMISSION_DENIED:
-				$(TOOLS.geolocate).hide();
-				break;
-			case error.POSITION_UNAVAILABLE:
-				alert('The position of the device could not be determined. One or more of the location providers used in the location acquisition process reported an internal error that caused the process to fail entirely.')
-				break;
-			case error.TIMEOUT:
-				alert('The location acquisition timed out');
-				break;
-		}
+		switch (error.code) {
+            case error.UNKNOWN_ERROR:
+                alert('The location acquisition process failed');
+                break;
+            case error.PERMISSION_DENIED:
+                $(TOOLS.geolocate).hide();
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert('The position of the device could not be determined. One or more of the location providers used in the location acquisition process reported an internal error that caused the process to fail entirely.');
+                break;
+            case error.TIMEOUT:
+                alert('The location acquisition timed out');
+                break;
+            }
 	}
 
 	/**
@@ -160,7 +161,7 @@ var Controller = (function(){
 	function handleGeolocateNoSupport() {
 		setLoadingState(false, TOOLS.geolocate);
 		$(TOOLS.geolocate).hide();
-		alert('Geolocation API is not supported by your browser.')
+		alert('Geolocation API is not supported by your browser.');
 	}
 
 	/**
@@ -171,11 +172,16 @@ var Controller = (function(){
 		var linkBase = document.URL.split('#')[0];
 		$('#' + TOOLS.geocode + ' ul.resultList').children().remove();
 		
-		for (var i = 0; i < results.length; i++) {
-			var address = results[i];
-			var link = linkBase + "#10/" + parseFloat(address.lon) + "/" + parseFloat(address.lat);
-			$('#' + TOOLS.geocode + ' ul.resultList').append('<li><a href="' + link + '">' + address.display_name + '</a></li>')
-		}
+		if (results.length > 0) {
+            for (var i = 0; i < results.length; i++) {
+                var address = results[i];
+                var link = linkBase + "#10/" + parseFloat(address.lon) + "/" + parseFloat(address.lat);
+                $('#' + TOOLS.geocode + ' ul.resultList').append('<li><a href="' + link + '">' + address.display_name + '</a></li>');
+            }
+        } else {
+            $('#' + TOOLS.geocode + ' ul.resultList').append('<li class="noResult">No results matching your query have been found.</li>');
+        }
+        
 
 		$('#' + TOOLS.geocode + ' ul.resultList li a').click(handleGeocodeLinkClick);
 
