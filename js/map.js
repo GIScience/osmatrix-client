@@ -1,4 +1,4 @@
-var Map = (function() {
+var Map = (function () {
 
 	/**
 	 * Constructor
@@ -49,18 +49,20 @@ var Map = (function() {
 
 		var tiledLayer = new L.StamenTileLayer("toner-lite");
 		this.theMap.addLayer(tiledLayer);
+        
+        var matrixLayer = L.tileLayer('http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/totalNumbOfPOIs/diff/{z}/{x}/{y}?start=2&end=4', {
+            maxZoom: 18
+		});
+		this.theMap.addLayer(matrixLayer);
 	}
 
 	function moveTo(lonlat, zoom) {
-		if (lonlat) this.theMap.panTo(lonlat);
-		if (zoom) this.theMap.setZoom(zoom);
+		if (lonlat) {this.theMap.panTo(lonlat); }
+		if (zoom) {this.theMap.setZoom(zoom); }
 	}
 
 	function addMatrixLayer() {
-		// var matrixLayer = L.tileLayer('http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/totalNumbOfPOIs/diff/{z}/{x}/{y}?start=2&end=4', {
-		// 	maxZoom: 18
-		// });
-		// _self.theMap.addLayer(matrixLayer);
+		
 	}
 
 	map.prototype = new EventEmitter();
@@ -68,4 +70,4 @@ var Map = (function() {
 	map.prototype.moveTo = moveTo;
 
 	return map;
-})();
+}());

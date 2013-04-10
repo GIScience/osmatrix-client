@@ -1,7 +1,7 @@
-body {
+body, form {
 	font-family: 'Droid Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 15px;
-	line-height: 1;
+	font-size: 13px;
+	line-height: 15px;
 	color: #2d3841;
 }
 
@@ -69,7 +69,7 @@ div#toolbox {
 		-o-transition: width 0.5s; /* Opera */
 	}
 	
-		div#toolbox div.tool button {
+		div#toolbox div.tool > button {
 			color: #fff;
 			background-color: #2d3841;
 			border: 0;
@@ -89,20 +89,21 @@ div#toolbox {
 			-o-transition: background-color 0.5s ease; /* Opera */
 		}
 		
-		div#toolbox div.tool button:hover {
+		div#toolbox div.tool > button:hover {
 			background-color: #3f4f5a;
 			cursor:pointer;
 			
 		}
 		
-		div#toolbox div.tool button.loading,
-		div#toolbox div.tool button.active {
-			background-color: #abc6c8;
+		div#toolbox div.tool > button.loading,
+		div#toolbox div.tool > button.active {
+			background-color: #fff;
+			color: #2d3841;
 			-webkit-border-radius: 0 3px 3px 0;
 			border-radius: 0 3px 3px 0;
 		}
 		
-			div#toolbox div.tool button span {
+			div#toolbox div.tool > button span {
 				display: inline-block;
 				width: 15px;
 			}
@@ -131,14 +132,13 @@ div#toolbox {
 			div#toolbox div.tool div.spinner {
 				width: 0;
 				height: 35px;
-				background: #abc6c8 url(img/ajax-loader.gif) no-repeat 50% 50%;
+				background: #fff url(img/ajax-loader.gif) no-repeat 50% 50%;
 				-webkit-border-radius: 3px 0 0 3px;
 				border-radius: 3px 0 0 3px;
 			}
 
 			div#toolbox div.tool div.spinner.loading {
 				width: 35px;
-				border-right: 1px solid #96aeb0;
 			}
 		
 		/**
@@ -150,16 +150,16 @@ div#toolbox {
 			width: 0;
 			height: 0;
 			padding: 0;
-			background-color: #abc6c8;
+			background-color: #fff;
 			float: right;
 			color: #2d3841;
 		}
 
 			div#toolbox div.tool div.content h2 {
-				font-size: 1em;
+				font-size: 15px;
 				font-weight: normal;
 				margin: 0 0 10px 0;
-				padding-bottom: 10px;
+				padding: 4px 0 7px 0;
 				border-bottom: 1px solid #96aeb0;
 			}
 
@@ -167,17 +167,15 @@ div#toolbox {
 				width: 300px;
 				height: auto;
 				max-height: 700px;
-				padding: 10px;			
-				border-right: 1px solid #96aeb0;
+				padding: 10px 15px;
 				-webkit-border-radius: 3px 0 3px 3px;
-				border-radius: 3px 0 0 3px;
+				border-radius: 3px 0 3px 3px;
 			}
 
 /* @group Search Place */
 
 div#searchPlace > div.content > input[type="text"] {
 	width: 288px;
-	border: 1px solid #96aeb0;
 	padding: 5px;
 	font-size: 12px;
 	color: #2d3841;
@@ -187,9 +185,6 @@ div#searchPlace > div.content > ul.resultList {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	background-color: #e6eeef;
-	border: 1px solid #96aeb0;
-	border-top-width: 0;
 	height: auto;
 	max-height: 550px;
 	overflow-y: auto;
@@ -204,7 +199,7 @@ div#searchPlace > div.content > ul.resultList {
 		display: block;
 		color: #2d3841;
 		text-decoration: none;
-		padding: 7px 15px;
+		padding: 7px 5px;
         line-height: 1.2;
 	}
 	
@@ -212,6 +207,42 @@ div#searchPlace > div.content > ul.resultList {
 		background-color: #2d3841;
 		color: #fff;
 	}
+
+/* @end */
+
+
+/* @group Layer Switcher */
+
+#layer fieldset {
+	margin-bottom: 30px;
+}
+
+#layer fieldset legend {
+	font-size: 15px;
+	margin-bottom: 15px;
+	line-height: 30px;
+}
+
+	#layer select {
+		width: 298px;
+		font-size: 13px;
+	}
+	
+	#layer fieldset .btn-group button {
+		margin-right: 0;
+		width: 150px;
+		font-size: 13px;
+	}
+	
+	#layer fieldset label {
+		font-size: 13px;
+	}
+	
+	#layer fieldset label:hover {
+		cursor: pointer;
+	}
+
+
 
 /* @end */
 

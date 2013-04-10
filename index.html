@@ -8,7 +8,8 @@
 	<meta name="description" content="" />
 
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" />
-	<link rel="stylesheet" type="text/css" href="style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="style.css" media="all">
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css">
@@ -19,6 +20,7 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 	<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.1"></script>	
 
+    <script type="text/javascript" src="js/osmatrix.js"></script>
 	<script type="text/javascript" src="js/event.js"></script>
 	<script type="text/javascript" src="js/permalink.js"></script>
 	<script type="text/javascript" src="js/geolocator.js"></script>
@@ -42,13 +44,7 @@
 			<div class="content">
 				<h2>Find place</h2>
 				<input type="text">
-				<ul class="resultList">
-				<!-- 	<li><a href="#">Gera</a></li>
-					<li><a href="#">Jena</a></li>
-					<li><a href="#">Enschede</a></li>
-					<li><a href="#">Mannheim</a></li>
-					<li><a href="#">Heidelberg</a></li> -->
-				</ul>
+				<ul class="resultList"></ul>
 			</div>
 			<div class="spinner"></div>
 		</div>
@@ -57,6 +53,25 @@
 			<button><span>L</span></button>
 			<div class="content">
 				<h2>Choose Layer</h2>
+                <form>
+                    <fieldset>
+                        <legend>Select characteristic</legend>
+                        <select id="characteristics"></select>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Select display mode</legend>
+                        <div class="btn-group">
+                            <button class="btn btn-success active" type="button" value="single">Single</button>
+                            <button class="btn" type="button" value="compare">Comparison</button>
+                        </div>
+                        
+                    </fieldset>
+                    
+                    <fieldset id="timestamps">
+                        <legend>Select timestamps</legend>
+                    </fieldset>    
+                </form>
 			</div>
 			<div class="spinner"></div>
 		</div>

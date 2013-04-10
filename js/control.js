@@ -1,5 +1,6 @@
-var Controller = (function () {
-
+var Controller = (function ($) {
+    'use strict';
+    
 	var TOOLS = {
 		geolocate: 'geolocate',
 		layer: 'layer',
@@ -17,15 +18,17 @@ var Controller = (function () {
 		map.register('map:moved', handleMapMove);
 
 		$('.tool > button').click(handleButtonClick);
+        $('#' + TOOLS.layer + ' .btn-group button').click(handleLayerModeToogle);
 		$('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
 
-		setTimeout(function () {
-			$('h1').addClass('hide');
-		}, 5000);
-
-		setInitialMapLocation();
+		initializeTheMatrix();
+        setInitialMapLocation();
 	}
 
+    function initializeTheMatrix() {
+        OSMatrix.getCapabilities(handleMatrixCapabilities);
+    }
+    
 	/**
 	 * [setInitialMapLocation description]
 	 */
@@ -65,8 +68,8 @@ var Controller = (function () {
 	 * @param  {[type]} tool [description]
 	 */
 	function toggleActiveState(tool) {
-		$('#' + tool + ' button').toggleClass('active');
-		$('#' + tool + ' .content').toggleClass('active');
+		$('#' + tool + ' > button').toggleClass('active');
+		$('#' + tool + ' > .content').toggleClass('active');
 	}
 
 	/* *********************************************************************
@@ -86,6 +89,11 @@ var Controller = (function () {
 			toggleActiveState(toolId);
 		}
 	}
+    
+    function handleLayerModeToogle() {
+        $(this).siblings().removeClass('btn-success active');
+        $(this).addClass('btn-success active');
+    }
 
 	/**
 	 * [handleFormType description]
@@ -152,7 +160,7 @@ var Controller = (function () {
             case error.TIMEOUT:
                 alert('The location acquisition timed out');
                 break;
-            }
+        }
 	}
 
 	/**
@@ -195,10 +203,20 @@ var Controller = (function () {
 		map.moveTo(Permalink.parse($(this).attr('href')).lonlat);
 		return false;
 	}
+    
+    function handleMatrixCapabilities(capabilities) {
+        for (var i = 0; i < capabilities.timestamps.length; i++) {
+            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input type="checkbox" name="timestamp" value="' + capabilities.timestamps[i].id + '">' + capabilities.timestamps[i].timestamp + '</label>');
+        }
+        
+        for (var i = 0; i < capabilities.attributes.length; i++) {
+            $('#' + TOOLS.layer + ' select#characteristics').append('<option value="' + capabilities.attributes[i].name + '">' + capabilities.attributes[i].title + '</option>');
+        }
+    }
 
 	var controller = function() {};
 	controller.prototype.initialize = initialize;
 	return new controller();
-})();
+}(jQuery));
 
 window.onload = Controller.initialize;
