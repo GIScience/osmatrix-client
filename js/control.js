@@ -15,14 +15,14 @@ var Controller = (function ($) {
 
 		map.register('layer:loadStart', handleMapLoadStart);
 		map.register('layer:loadEnd', handleMapLoadEnd);
-		map.register('map:moved', handleMapMove);
+		map.register('map:changed', handleMapChanged);
 
 		$('.tool > button').click(handleButtonClick);
         $('#' + TOOLS.layer + ' .btn-group button').click(handleLayerModeToogle);
+        $('#' + TOOLS.layer + ' form').submit(handleLayerSubmit);
 		$('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
 
 		initializeTheMatrix();
-        setInitialMapLocation();
 	}
 
     function initializeTheMatrix() {
@@ -32,13 +32,23 @@ var Controller = (function ($) {
 	/**
 	 * [setInitialMapLocation description]
 	 */
-	function setInitialMapLocation() {
+	function initializeTheMap() {
 		var permaLink = Permalink.parse(document.URL);
 		if (permaLink) {
-            map.moveTo(permaLink.lonlat, permaLink.zoom);
+			map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom);
+			$('#' + TOOLS.layer + ' .btn-group button[value="' + permaLink.mode + '"]').click();
+			$('#' + TOOLS.layer + ' #characteristics').val(permaLink.layer);
+
+			var times = $('#' + TOOLS.layer + ' input[name="timestamp"]');
+			for (var i = 0, len = times.length; i < len; i++) {
+				times[i].checked = (permaLink.times.indexOf(times[i].value) != -1);
+			}
+
         } else {
             getCurrentPosition();
         }
+
+        $('#' + TOOLS.layer + ' form').submit();
 	}
 
 	/**
@@ -90,9 +100,60 @@ var Controller = (function ($) {
 		}
 	}
     
+    /**
+     * [handleLayerModeToogle description]
+     * @return {[type]} [description]
+     */
     function handleLayerModeToogle() {
         $(this).siblings().removeClass('btn-success active');
         $(this).addClass('btn-success active');
+
+        var timeElements = $('#' + TOOLS.layer + ' input[name="timestamp"]');
+        for (var i = 0, len = timeElements.length; i < len; i++) {
+        	if ((i === 0 && this.value === 'diff') || i === len - 1) {
+        		timeElements[i].checked = true; 
+        	} else {
+        		timeElements[i].checked = false;
+        	}
+	    }
+    }
+
+    /**
+     * [handleTimeStampChange description]
+     * @return {[type]} [description]
+     */
+    function handleTimeStampChange() {
+   		var mode = map.MODE[$('#' + TOOLS.layer + ' #layerMode button.active').val()];
+    	var timeElements = $('#' + TOOLS.layer + ' input[name="timestamp"]:checked');
+    	
+	    if ((mode === map.MODE.diff && timeElements.length > 2) || mode === map.MODE.timestamp) {
+	    	for (var i = 0, len = timeElements.length; i < len; i++) {
+		   		if (timeElements[i].value != this.value) {timeElements[i].checked = false; }
+		   	}
+	    }
+    }
+
+    /**
+     * [handleLayerChange description]
+     */
+    function handleLayerSubmit() {
+    	var layer = $('#' + TOOLS.layer + ' select#characteristics').val();
+    	var mode = $('#' + TOOLS.layer + ' #layerMode button.active').val();
+    	
+    	var times = [];
+    	var timeElements = $('#' + TOOLS.layer + ' input[name="timestamp"]');
+    	for (var i = 0, len = timeElements.length; i < len; i++) {
+    		if (timeElements[i].checked) {times.push(timeElements[i].value)}
+    	}
+
+    	if ((map.MODE[mode] === map.MODE.diff && times.length === 2) || map.MODE[mode] === map.MODE.timestamp) {
+    		map.updateMatrixLayer(mode, layer, times);	
+    	} else {
+    		alert("Please select two timestamps for comparison.")
+    	}
+    	
+
+    	return false;
     }
 
 	/**
@@ -126,8 +187,8 @@ var Controller = (function ($) {
 	 * @param  {[type]} mapState [description]
 	 * @return {[type]}          [description]
 	 */
-	function handleMapMove(mapState) {
-		Permalink.update(mapState.zoom, mapState.lon, mapState.lat);
+	function handleMapChanged(mapState) {
+		Permalink.update(mapState.mode, mapState.layer, mapState.times, mapState.zoom, mapState.lon, mapState.lat);
 	}
 
 	/**
@@ -204,14 +265,21 @@ var Controller = (function ($) {
 		return false;
 	}
     
+    /**
+     * [handleMatrixCapabilities description]
+     * @param  {[type]} capabilities [description]
+     */
     function handleMatrixCapabilities(capabilities) {
-        for (var i = 0; i < capabilities.timestamps.length; i++) {
-            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input type="checkbox" name="timestamp" value="' + capabilities.timestamps[i].id + '">' + capabilities.timestamps[i].timestamp + '</label>');
-        }
-        
-        for (var i = 0; i < capabilities.attributes.length; i++) {
+    	for (var i = 0, len = capabilities.attributes.length; i < len; i++) {
             $('#' + TOOLS.layer + ' select#characteristics').append('<option value="' + capabilities.attributes[i].name + '">' + capabilities.attributes[i].title + '</option>');
         }
+
+        for (var i = 0, len = capabilities.timestamps.length; i < len; i++) {
+            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + capabilities.timestamps[i].id + '">' + capabilities.timestamps[i].timestamp + '</label>');
+        }
+
+        $('#' + TOOLS.layer + ' input[name="timestamp"]').change(handleTimeStampChange);
+        initializeTheMap();
     }
 
 	var controller = function() {};

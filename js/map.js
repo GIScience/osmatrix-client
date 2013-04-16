@@ -1,4 +1,12 @@
 var Map = (function () {
+    "use strict";
+
+    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/";
+
+    var MODE = {
+    	timestamp: 1,
+    	diff: 2
+    }
 
 	/**
 	 * Constructor
@@ -8,10 +16,10 @@ var Map = (function () {
 		var self = this;
 
 		/**
-		 * [emitMapMoveEvent description]
+		 * [emitMapChangedEvent description]
 		 */
-		function emitMapMoveEvent() {
-			self.emit('map:moved', {
+		function emitMapChangedEvent(e) {
+			self.emit('map:changed', {
 				zoom: self.theMap.getZoom(),
 				lat: self.theMap.getCenter().lat,
 				lon: self.theMap.getCenter().lng
@@ -43,31 +51,57 @@ var Map = (function () {
 
 		this.theMap = L.map(container).setView([51.505, -0.09], 13);
 
-		this.theMap.on('zoomend', emitMapMoveEvent);
-		this.theMap.on('moveend', emitMapMoveEvent);
-		this.theMap.on('layeradd', handleLayerAddEvent);
-
 		var tiledLayer = new L.StamenTileLayer("toner-lite");
 		this.theMap.addLayer(tiledLayer);
-        
-        var matrixLayer = L.tileLayer('http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/totalNumbOfPOIs/diff/{z}/{x}/{y}?start=2&end=4', {
-            maxZoom: 18
-		});
-		this.theMap.addLayer(matrixLayer);
+
+		this.theMap.on('zoomend', emitMapChangedEvent);
+		this.theMap.on('moveend', emitMapChangedEvent);
+		this.theMap.on('layeradd', handleLayerAddEvent);
 	}
 
+	/**
+	 * [moveTo description]
+	 * @param  {[type]} lonlat [description]
+	 * @param  {[type]} zoom   [description]
+	 */
 	function moveTo(lonlat, zoom) {
 		if (lonlat) {this.theMap.panTo(lonlat); }
 		if (zoom) {this.theMap.setZoom(zoom); }
 	}
 
-	function addMatrixLayer() {
-		
+	function updateMatrixLayer(mode, layer, times) {
+		var layerUrl, mapMode;
+
+		if (MODE[mode] === MODE.timestamp) {
+			mapMode = 'timestamp';
+			layerUrl = MAP_URL + layer + '/timestamp/' + times[0] + '/{z}/{x}/{y}';
+		} else {
+			mapMode = 'diff';
+			layerUrl = MAP_URL + layer + '/diff/{z}/{x}/{y}?start=' + times[0] + '&end=' + times[1];
+		}
+
+
+		if (this.matrixLayer) {this.theMap.removeLayer(this.matrixLayer); }
+		this.matrixLayer = L.tileLayer(layerUrl, {
+            maxZoom: 18
+		});
+		this.theMap.addLayer(this.matrixLayer);
+
+		this.emit('map:changed', {
+			mode: mapMode,
+			layer: layer,
+			times: times,
+			zoom: this.theMap.getZoom(),
+			lat: this.theMap.getCenter().lat,
+			lon: this.theMap.getCenter().lng
+		});
 	}
 
 	map.prototype = new EventEmitter();
 	map.prototype.constructor = map;
 	map.prototype.moveTo = moveTo;
+	map.prototype.updateMatrixLayer = updateMatrixLayer;
+	map.prototype.MODE = MODE;
 
 	return map;
 }());

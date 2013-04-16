@@ -76,10 +76,10 @@ div#toolbox {
 			margin: 0;
 			padding: 10px;
 			line-height: 15px;
-			float: right;
+			float: left;
 			font-size: 1em;
 
-			box-shadow: 0 0 8px rgba(0,0,0,0.4);
+			box-shadow: 0 0 4px rgba(0,0,0,0.4);
 			-webkit-border-radius: 3px;
 			border-radius: 3px;
 
@@ -99,8 +99,7 @@ div#toolbox {
 		div#toolbox div.tool > button.active {
 			background-color: #fff;
 			color: #2d3841;
-			-webkit-border-radius: 0 3px 3px 0;
-			border-radius: 0 3px 3px 0;
+			
 		}
 		
 			div#toolbox div.tool > button span {
@@ -111,10 +110,11 @@ div#toolbox {
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
 			width: 0;
-			float: right;
+			float: left;
 			border: 0;
 			overflow: hidden;
-			box-shadow: 0 0 8px rgba(0,0,0,0.4);
+			box-shadow: 0 0 4px rgba(0,0,0,0.4);
+			margin-right: 1px;
 
 			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease;
 			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease; /* Firefox 4 */
@@ -151,7 +151,6 @@ div#toolbox {
 			height: 0;
 			padding: 0;
 			background-color: #fff;
-			float: right;
 			color: #2d3841;
 		}
 

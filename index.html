@@ -35,22 +35,24 @@
 	<section id="map"></section>
 	<div id="toolbox">
 		<div id="geolocate" class="tool">
-			<button><span>G</span></button>
 			<div class="spinner"></div>
+			<button><span>G</span></button>
 		</div>
 
 		<div id="searchPlace" class="tool">
-			<button><span>F</span></button>
+			
+			<div class="spinner"></div>
 			<div class="content">
 				<h2>Find place</h2>
 				<input type="text">
 				<ul class="resultList"></ul>
 			</div>
-			<div class="spinner"></div>
+			<button><span>F</span></button>
 		</div>
 
 		<div id="layer" class="tool">
-			<button><span>L</span></button>
+			<div class="spinner"></div>
+			
 			<div class="content">
 				<h2>Choose Layer</h2>
                 <form>
@@ -61,19 +63,22 @@
                     
                     <fieldset>
                         <legend>Select display mode</legend>
-                        <div class="btn-group">
-                            <button class="btn btn-success active" type="button" value="single">Single</button>
-                            <button class="btn" type="button" value="compare">Comparison</button>
+                        <div class="btn-group" id="layerMode">
+                            <button class="btn btn-success active" type="button" value="timestamp">Single</button>
+                            <button class="btn" type="button" value="diff">Comparison</button>
                         </div>
                         
                     </fieldset>
                     
                     <fieldset id="timestamps">
                         <legend>Select timestamps</legend>
-                    </fieldset>    
+                    </fieldset>
+
+                    <button type="submit" class="btn">Update layer</button>
                 </form>
 			</div>
-			<div class="spinner"></div>
+
+			<button><span>L</span></button>
 		</div>
 	</div>
 

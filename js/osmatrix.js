@@ -1,12 +1,11 @@
 var OSMatrix = (function ($) {
     "use strict";
     
-    var INSTANCE,
-        PROXY_URL = "/cgi-bin/proxy.cgi?url=",
+    var PROXY_URL = "/cgi-bin/proxy.cgi?url=",
         API_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/";
     
-    function OSMATRIX() {
-        if (!INSTANCE) {INSTANCE = this; }
+    function Osmatrix() {
+        
     }
     
     function get(url, callback) {
@@ -21,7 +20,7 @@ var OSMatrix = (function ($) {
         get(API_URL + 'api', callback);
     }
     
-    OSMATRIX.prototype.getCapabilities = getCapabilities;
+    Osmatrix.prototype.getCapabilities = getCapabilities;
     
-    return new OSMATRIX();
+    return new Osmatrix();
 }(jQuery));
