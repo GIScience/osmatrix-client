@@ -1,7 +1,7 @@
 var Ui = (function ($) {
     'use strict';
     
-    var TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace' },
+    var TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend' },
         theInterface;
     
     
@@ -31,11 +31,18 @@ var Ui = (function ($) {
 	 * @param  {[type]} tool [description]
 	 */
 	function toggleActiveState(tool) {
-        $('#toolbox button').not('#' + tool + ' > button').removeClass('active');
-		$('#toolbox .content').not('#' + tool + ' > .content').removeClass('active');
+        $('.tool > button').not('#' + tool + ' > button').removeClass('active');
+		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
+        
         
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
+        
+        if (tool === TOOLS.legend) {
+            $('body').toggleClass('showSidebar'); 
+            $('#map').toggleClass('showSidebar'); 
+            $('#sidebar').toggleClass('active'); 
+        }
 	}
     
     /**

@@ -5,7 +5,38 @@ body, form {
 	color: #2d3841;
 }
 
+div.tool > button {
+	color: #fff;
+	background-color: #2d3841;
+	border: 0;
+	margin: 0;
+	padding: 10px;
+	line-height: 15px;
+	
+	font-size: 1em;
+	box-shadow: 0 0 4px rgba(0,0,0,0.4);
 
+	transition: background-color 0.5s ease;
+	-moz-transition: background-color 0.5s ease; /* Firefox 4 */
+	-webkit-transition: background-color 0.5s ease; /* Safari and Chrome */
+	-o-transition: background-color 0.5s ease; /* Opera */
+}
+		
+div.tool > button:hover {
+	background-color: #3f4f5a;
+	cursor:pointer;
+}
+
+div.tool > button span {
+	display: inline-block;
+	width: 15px;
+}
+
+div.tool > button.loading,
+div.tool > button.active {
+	background-color: #fff;
+	color: #2d3841;
+}
 
 /* @group head */
 
@@ -21,6 +52,14 @@ h1 {
 	font-weight: normal;
 	color: #fff;
 	background-color: #2d3841;
+}
+
+h2 {
+	font-size: 15px;
+	font-weight: normal;
+	margin: 0 0 10px 0;
+	padding: 4px 0 7px 0;
+	border-bottom: 1px solid #96aeb0;
 }
 
 h1.hide {
@@ -42,6 +81,16 @@ section#map {
 	bottom: 0;
 	left: 0;
 	z-index: 500;
+	
+	transition: left 0.5s ease;
+	-moz-transition: left 0.5s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease; /* Opera */
+
+}
+
+section#map.showSidebar {
+    left: 300px;
 }
 
 /* @end */
@@ -70,43 +119,16 @@ div#toolbox {
 	}
 	
 		div#toolbox div.tool > button {
-			color: #fff;
-			background-color: #2d3841;
-			border: 0;
-			margin: 0;
-			padding: 10px;
-			line-height: 15px;
 			float: left;
-			font-size: 1em;
-
-			box-shadow: 0 0 4px rgba(0,0,0,0.4);
 			-webkit-border-radius: 0 0 3px 3px;
 			border-radius: 0 0 3px 3px;
-
-			transition: background-color 0.5s ease;
-			-moz-transition: background-color 0.5s ease; /* Firefox 4 */
-			-webkit-transition: background-color 0.5s ease; /* Safari and Chrome */
-			-o-transition: background-color 0.5s ease; /* Opera */
-		}
-		
-		div#toolbox div.tool > button:hover {
-			background-color: #3f4f5a;
-			cursor:pointer;
-			
 		}
 		
 		div#toolbox div.tool > button.loading,
 		div#toolbox div.tool > button.active {
-			background-color: #fff;
-			color: #2d3841;
 			-webkit-border-radius: 0 0 3px 0;
 			border-radius: 0 0 3px 0;
 		}
-		
-			div#toolbox div.tool > button span {
-				display: inline-block;
-				width: 15px;
-			}
 
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
@@ -154,14 +176,6 @@ div#toolbox {
 			background-color: #fff;
 			color: #2d3841;
 		}
-
-			div#toolbox div.tool div.content h2 {
-				font-size: 15px;
-				font-weight: normal;
-				margin: 0 0 10px 0;
-				padding: 4px 0 7px 0;
-				border-bottom: 1px solid #96aeb0;
-			}
 
 			div#toolbox div.tool div.content.active {	
 				width: 300px;
@@ -245,5 +259,71 @@ div#searchPlace > div.content > ul.resultList {
 
 
 /* @end */
+
+/* @end */
+
+
+/* @group Sidebar */
+
+#sidebar {
+	z-index: 750;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 35px;
+	
+	transition: width 0.5s ease, padding 0.5s ease;
+	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+}
+
+#sidebar.active {
+	width: 335px;
+}
+
+#sidebar .content {
+	width: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+	
+	transition: width 0.5s ease, padding 0.5s ease;
+	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+}
+
+#sidebar .content.active {
+	width: 270px;
+	padding: 10px 15px;
+	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+div#sidebar div.tool > button {
+	float: left;
+	-webkit-border-radius: 0 0 3px 3px;
+	border-radius: 0 3px 3px 0;
+	position: absolute;
+	left: 0px;
+	
+	transition: left 0.5s ease;
+	-moz-transition: left 0.5s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease; /* Opera */
+
+}
+
+div#sidebar div#legend > button {
+	bottom: 50px;
+}
+
+body.showSidebar div#sidebar div.tool > button {
+	left: 301px;
+}
 
 /* @end */

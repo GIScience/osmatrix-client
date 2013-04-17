@@ -48,7 +48,7 @@ var Map = (function () {
 		}
 
 
-		this.theMap = L.map(container).setView([51.505, -0.09], 13);
+		this.theMap = L.map(container, {zoomControl: false}).setView([51.505, -0.09], 13);
 
 		var tiledLayer = new L.StamenTileLayer("toner-lite");
 		this.theMap.addLayer(tiledLayer);
