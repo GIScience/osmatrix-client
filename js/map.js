@@ -1,12 +1,11 @@
 var Map = (function () {
     "use strict";
 
-    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/";
-
-    var MODE = {
-    	timestamp: 1,
-    	diff: 2
-    }
+    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/",
+        MODE = {
+            timestamp: 1,
+            diff: 2
+        };
 
 	/**
 	 * Constructor

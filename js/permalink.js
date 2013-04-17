@@ -1,4 +1,5 @@
-var Permalink = (function(){
+var Permalink = (function () {
+    'use strict';
 
 	var state;
 
@@ -23,6 +24,7 @@ var Permalink = (function(){
 		if (zoom) {state.zoom = zoom; }
 		if (lon) {state.lon = lon; }
 		if (lat) {state.lat = lat; }
+        
 		var url = "#" + state.mode + "/" + state.layer + "/" + ((state.times.length === 1) ? state.times[0] + "/" : "") + state.zoom + "/" + state.lon + "/" + state.lat + ((state.times.length === 2) ? "?start=" + state.times[0] + "&end=" + state.times[1] : "");
 		history.pushState(null, null, url);
 	}
@@ -33,9 +35,9 @@ var Permalink = (function(){
 	 * @return {[type]}     [description]
 	 */
 	function parse(url) {
-		if (url.indexOf('#') != -1) {
+		if (url.indexOf('#') !== -1) {
 			state = {};
-
+            
 			var urlState = url.split('#')[1].split('/');
 			state.mode = urlState[0];
 			state.layer = urlState[1];
