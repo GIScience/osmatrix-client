@@ -52,6 +52,15 @@ h1 {
 	font-weight: normal;
 	color: #fff;
 	background-color: #2d3841;
+	
+		transition: left 2s;
+	-moz-transition: left 2s; /* Firefox 4 */
+	-webkit-transition: left 2s; /* Safari and Chrome */
+	-o-transition: left 2s; /* Opera */
+}
+
+h1.hide {
+	left: -99em;
 }
 
 h2 {
@@ -62,12 +71,13 @@ h2 {
 	border-bottom: 1px solid #96aeb0;
 }
 
-h1.hide {
-	left: -99em;
-	transition: left 2s;
-	-moz-transition: left 2s; /* Firefox 4 */
-	-webkit-transition: left 2s; /* Safari and Chrome */
-	-o-transition: left 2s; /* Opera */
+
+
+h3 {
+	font-size: 15px;
+	margin-bottom: 7px;
+	line-height: 30px;
+	font-weight: normal;
 }
 
 /* @end */
@@ -215,6 +225,12 @@ div#searchPlace > div.content > ul.resultList {
 		text-decoration: none;
 		padding: 7px 5px;
         line-height: 1.2;
+        background-color: #fff;
+        
+        transition: background-color 0.1s ease;
+		-moz-transition: background-color 0.1s ease; /* Firefox 4 */
+		-webkit-transition: background-color 0.1s ease; /* Safari and Chrome */
+		-o-transition: background-color 0.1s ease; /* Opera */
 	}
 	
 	div#searchPlace > div.content > ul.resultList li a:hover {
@@ -322,8 +338,32 @@ div#sidebar div#legend > button {
 	bottom: 50px;
 }
 
-body.showSidebar div#sidebar div.tool > button {
+div#sidebar.active div.tool > button {
 	left: 301px;
 }
+
+/* @group Legend */
+
+#labels .legendItem {
+	padding: 5px 0;
+	height: 17px;
+	/*line-height: 17px;*/
+	vertical-align: top;
+}
+
+#labels .legendItem span.graphic {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #ddd;
+	margin-right: 15px;
+}
+
+p.desc {
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 15px;
+}
+
+/* @end */
 
 /* @end */

@@ -1,11 +1,11 @@
 var Map = (function () {
     "use strict";
 
-    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/",
-        MODE = {
-            timestamp: 1,
-            diff: 2
-        };
+//    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/",
+//        MODE = {
+//            timestamp: 1,
+//            diff: 2
+//        };
 
 	/**
 	 * Constructor
@@ -68,18 +68,7 @@ var Map = (function () {
 		if (zoom) {this.theMap.setZoom(zoom); }
 	}
 
-	function updateMatrixLayer(mode, layer, times) {
-		var layerUrl, mapMode;
-
-		if (MODE[mode] === MODE.timestamp) {
-			mapMode = 'timestamp';
-			layerUrl = MAP_URL + layer + '/timestamp/' + times[0] + '/{z}/{x}/{y}';
-		} else {
-			mapMode = 'diff';
-			layerUrl = MAP_URL + layer + '/diff/{z}/{x}/{y}?start=' + times[0] + '&end=' + times[1];
-		}
-
-
+	function updateMatrixLayer(mode, layerUrl) {
 		if (this.matrixLayer) {this.theMap.removeLayer(this.matrixLayer); }
 		this.matrixLayer = L.tileLayer(layerUrl, {
             maxZoom: 18
@@ -87,9 +76,9 @@ var Map = (function () {
 		this.theMap.addLayer(this.matrixLayer);
 
 		this.emit('map:changed', {
-			mode: mapMode,
-			layer: layer,
-			times: times,
+			mode: mode.mode,
+			layer: mode.layer,
+			times: mode.times,
 			zoom: this.theMap.getZoom(),
 			lat: this.theMap.getCenter().lat,
 			lon: this.theMap.getCenter().lng
@@ -100,7 +89,6 @@ var Map = (function () {
 	map.prototype.constructor = map;
 	map.prototype.moveTo = moveTo;
 	map.prototype.updateMatrixLayer = updateMatrixLayer;
-	map.prototype.MODE = MODE;
 
 	return map;
 }());

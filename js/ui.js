@@ -32,16 +32,16 @@ var Ui = (function ($) {
 	 */
 	function toggleActiveState(tool) {
         $('.tool > button').not('#' + tool + ' > button').removeClass('active');
-		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
+		$('.tool > .content').not('#' + tool + ' > .content').not('#sidebar .content').removeClass('active');
         
         
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
         
         if (tool === TOOLS.legend) {
-            $('body').toggleClass('showSidebar'); 
-            $('#map').toggleClass('showSidebar'); 
-            $('#sidebar').toggleClass('active'); 
+//            $('body').toggleClass('showSidebar');
+            $('#map').toggleClass('showSidebar');
+            $('#sidebar').toggleClass('active');
         }
 	}
     
@@ -232,7 +232,23 @@ var Ui = (function ($) {
     
     
     /* *********************************************************************
-	 * Message
+	 * LEGEND
+	 * *********************************************************************/
+    
+    function updateLegend(l) {
+        $('#' + TOOLS.legend + ' .content #labels').children().remove();
+        $('#' + TOOLS.legend + ' .content h3').text(l.title);
+        $('#' + TOOLS.legend + ' .content p.desc').text(l.description);
+        
+        for (var i = 0, len = l.labels.length; i < len; i++) {
+            $('#' + TOOLS.legend + ' .content #labels').append('<div class="legendItem"><span class="graphic" style="background-color: ' + l.labels[i].color + ';"></span>' + l.labels[i].label + '</div>');
+        }
+    }
+    
+    
+    
+    /* *********************************************************************
+	 * MESSAGE
 	 * *********************************************************************/
     
     function displayMessage(type, text) {
@@ -262,6 +278,7 @@ var Ui = (function ($) {
     Ui.prototype.setLayerSwitcherToMode = setLayerSwitcherToMode;
     Ui.prototype.stopGeolocation = stopGeolocation;
     Ui.prototype.deactivateGeolocation = deactivateGeolocation;
+    Ui.prototype.updateLegend = updateLegend;
     
     theInterface = new Ui();
     

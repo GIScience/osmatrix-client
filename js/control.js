@@ -24,12 +24,17 @@ var Controller = (function ($) {
     }
     
     function handleLayerUpdate(layerInfo) {
-        map.updateMatrixLayer(layerInfo.mode, layerInfo.layer, layerInfo.times);
+        OSMatrix.getLegend(layerInfo.mode, layerInfo.layer, handleLegend);
+        map.updateMatrixLayer(layerInfo, OSMatrix.getLayerUrl(layerInfo.mode, layerInfo.layer, layerInfo.times));
     }
     
     function handleMatrixCapabilities(capabilities) {
         Ui.initializeLayerSwitcher(capabilities);
         initializeTheMap();
+    }
+    
+    function handleLegend(results) {
+        Ui.updateLegend(results);
     }
     
     function handleGeocodeResults(results) {
