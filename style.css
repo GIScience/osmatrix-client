@@ -12,9 +12,9 @@ div.tool > button {
 	margin: 0;
 	padding: 10px;
 	line-height: 15px;
-	
+	border: 0 solid rgba(0,0,0,0.4);
 	font-size: 1em;
-	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+	z-index: 5000;
 
 	transition: background-color 0.5s ease;
 	-moz-transition: background-color 0.5s ease; /* Firefox 4 */
@@ -36,7 +36,7 @@ div.tool > button.loading,
 div.tool > button.active {
 	background-color: #fff;
 	color: #2d3841;
-	border-left: 1px solid rgba(0,0,0,0.4);
+	margin-left: -1px;
 }
 
 /* @group head */
@@ -92,6 +92,7 @@ section#map {
 	bottom: 0;
 	left: 0;
 	z-index: 500;
+	border-left: 1px solid rgba(0,0,0,0.4);
 	
 	transition: left 0.5s ease;
 	-moz-transition: left 0.5s ease; /* Firefox 4 */
@@ -131,23 +132,26 @@ div#toolbox {
 	
 		div#toolbox div.tool > button {
 			float: left;
+			border-width: 0 1px 1px 1px;
 			-webkit-border-radius: 0 0 3px 3px;
 			border-radius: 0 0 3px 3px;
+			position: relative;
 		}
 		
 		div#toolbox div.tool > button.loading,
 		div#toolbox div.tool > button.active {
+			border-width: 0 1px 1px 0;
 			-webkit-border-radius: 0 0 3px 0;
 			border-radius: 0 0 3px 0;
 		}
 
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
+			position: relative;
 			width: 0;
 			float: left;
-			border: 0;
 			overflow: hidden;
-			box-shadow: 0 0 4px rgba(0,0,0,0.4);
+			border: 0 solid rgba(0,0,0,0.4);
 			margin-right: 0px;
 
 			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease;
@@ -169,10 +173,13 @@ div#toolbox {
 				background: #fff url(img/ajax-loader.gif) no-repeat 50% 50%;
 				-webkit-border-radius: 0 0 0 3px;
 				border-radius: 0 0 0 3px;
+				margin-right: -1px;
+				z-index: 5000;
 			}
 
 			div#toolbox div.tool div.spinner.loading {
 				width: 35px;
+				border-width: 0 0 1px 1px;
 			}
 		
 		/**
@@ -186,6 +193,7 @@ div#toolbox {
 			padding: 0;
 			background-color: #fff;
 			color: #2d3841;
+			z-index: 4000;
 		}
 
 			div#toolbox div.tool div.content.active {	
@@ -195,6 +203,7 @@ div#toolbox {
 				padding: 10px 15px;
 				-webkit-border-radius: 0 0 3px 3px;
 				border-radius: 0 0 3px 3px;
+				border-width: 0 1px 1px 1px;
 			}
 
 /* @group Search Place */
@@ -318,7 +327,7 @@ div#searchPlace > div.content > ul.resultList {
 #sidebar .content.active {
 	width: 270px;
 	padding: 10px 15px;
-	box-shadow: 0 0 4px rgba(0,0,0,0.4);
+	/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
 }
 
 div#sidebar div.tool > button {
@@ -327,12 +336,14 @@ div#sidebar div.tool > button {
 	border-radius: 0 3px 3px 0;
 	position: absolute;
 	left: 0px;
+	margin-left: -1px;
+	
+	border-width: 1px 1px 1px 0;
 	
 	transition: left 0.5s ease;
 	-moz-transition: left 0.5s ease; /* Firefox 4 */
 	-webkit-transition: left 0.5s ease; /* Safari and Chrome */
 	-o-transition: left 0.5s ease; /* Opera */
-
 }
 
 div#sidebar div#legend > button {
