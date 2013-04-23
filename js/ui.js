@@ -1,7 +1,7 @@
 var Ui = (function ($) {
     'use strict';
     
-    var TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend' },
+    var TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend', message: 'message' },
         theInterface;
     
     
@@ -32,16 +32,16 @@ var Ui = (function ($) {
 	 */
 	function toggleActiveState(tool) {
         $('.tool > button').not('#' + tool + ' > button').removeClass('active');
-		$('.tool > .content').not('#' + tool + ' > .content').not('#sidebar .content').removeClass('active');
-        
+		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
+        $('#map').removeClass('showSidebar');
+        $('#sidebar').removeClass('active');
         
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
         
-        if (tool === TOOLS.legend) {
-//            $('body').toggleClass('showSidebar');
-            $('#map').toggleClass('showSidebar');
-            $('#sidebar').toggleClass('active');
+        if ($('#' + tool).parent().attr('id') === 'sidebar' && $('#' + tool + ' > button').hasClass('active')) {
+            $('#map').addClass('showSidebar');
+            $('#sidebar').addClass('active');
         }
 	}
     
@@ -228,6 +228,12 @@ var Ui = (function ($) {
     	return false;
     }
     
+	
+    
+    function setLayerLoadingState (state) {
+        setLoadingState(state, TOOLS.layer);
+    }
+    
     
     
     
@@ -252,7 +258,15 @@ var Ui = (function ($) {
 	 * *********************************************************************/
     
     function displayMessage(type, text) {
-        alert(text);
+        $('#' + TOOLS.message).removeClass().addClass(type);
+        $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
+        $('#' + TOOLS.message + ' p').text(text);
+        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
+        $('#' + TOOLS.message).show();
+    }
+    
+    function hideMessage() {
+        $('#' + TOOLS.message).hide();
     }
     
     /* *********************************************************************
@@ -264,6 +278,7 @@ var Ui = (function ($) {
         $('#' + TOOLS.layer + ' .btn-group button').click(handleLayerModeToogle);
         $('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
         $('#' + TOOLS.layer + ' form').submit(handleLayerSubmit);
+        hideMessage();
     }
     
     
@@ -271,14 +286,14 @@ var Ui = (function ($) {
     Ui.prototype = new EventEmitter();
 	Ui.prototype.constructor = Ui;
     
-    Ui.prototype.setLoadingState = setLoadingState;
-    Ui.prototype.toggleActiveState = toggleActiveState;
     Ui.prototype.updateGeocodeResultList = updateGeocodeResultList;
     Ui.prototype.initializeLayerSwitcher = initializeLayerSwitcher;
     Ui.prototype.setLayerSwitcherToMode = setLayerSwitcherToMode;
     Ui.prototype.stopGeolocation = stopGeolocation;
     Ui.prototype.deactivateGeolocation = deactivateGeolocation;
     Ui.prototype.updateLegend = updateLegend;
+    Ui.prototype.setLayerLoadingState = setLayerLoadingState;
+    
     
     theInterface = new Ui();
     

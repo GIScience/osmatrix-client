@@ -1,104 +1,27 @@
-var Controller = (function ($) {
+var Controller = (function (w) {
     'use strict';
     
-	var map;
+    var $ = w.jQuery,
+        ui = w.Ui,
+        perma = w.Permalink,
+        geolocator = w.Geolocator,
+        geocoder = w.Geocoder,
+        osmatrix = w.OSMatrix,
+        url = w.document.URL,
+        map;
     
-    // remove this
-    var TOOLS = {
-		geolocate: 'geolocate',
-		layer: 'layer',
-		geocode: 'searchPlace'
-	};
+    /* *********************************************************************
+	 * GEOLOCATION
+	 * *********************************************************************/
     
-    function handleGeolocationRequest() {
-        Geolocator.locate(handleGeolocateSuccess, handleGeolocateError, handleGeolocateNoSupport);
-    }
-    
-    function handleGeocodeRequest(address) {
-        Geocoder.find(address, handleGeocodeResults);
-    }
-    
-    function handleGeocodeLink(link) {
-        var permaLinkState = Permalink.parse(link);
-        map.moveTo([permaLinkState.lat, permaLinkState.lng]);
-    }
-    
-    function handleLayerUpdate(layerInfo) {
-        OSMatrix.getLegend(layerInfo.mode, layerInfo.layer, handleLegend);
-        map.updateMatrixLayer(layerInfo, OSMatrix.getLayerUrl(layerInfo.mode, layerInfo.layer, layerInfo.times));
-    }
-    
-    function handleMatrixCapabilities(capabilities) {
-        Ui.initializeLayerSwitcher(capabilities);
-        initializeTheMap();
-    }
-    
-    function handleLegend(results) {
-        Ui.updateLegend(results);
-    }
-    
-    function handleGeocodeResults(results) {
-        Ui.updateGeocodeResultList(document.URL, results);
-	}
-    
-    function initializeTheMatrix() {
-        OSMatrix.getCapabilities(handleMatrixCapabilities);
-    }
-    
-	function handleMapLoadStart() {
-		Ui.setLoadingState(true, TOOLS.layer);
-	}
-
-	function handleMapLoadEnd() {
-		Ui.setLoadingState(false, TOOLS.layer);
-	}
-
-	function handleMapChanged(mapState) {
-		Permalink.update(mapState.mode, mapState.layer, mapState.times, mapState.zoom, mapState.lon, mapState.lat);
-	}
-
-	/**
-	 * [initialize description]
-	 */
-	function initialize() {
-		map = new Map('map');
-
-		map.register('layer:loadStart', handleMapLoadStart);
-		map.register('layer:loadEnd', handleMapLoadEnd);
-		map.register('map:changed', handleMapChanged);
-        
-        Ui.register('ui:geolocationRequest', handleGeolocationRequest);
-        Ui.register('ui:geocodeRequest', handleGeocodeRequest);
-        Ui.register('ui:geocodeLinkClick', handleGeocodeLink);
-        Ui.register('ui:layerUpdate', handleLayerUpdate);
-
-		initializeTheMatrix();
-	}
-    
-	/**
-	 * [setInitialMapLocation description]
-	 */
-	function initializeTheMap() {
-		var permaLink = Permalink.parse(document.URL);
-		if (permaLink) {map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom); }
-            else {handleGeolocationRequest(); }
-        
-        Ui.setLayerSwitcherToMode(permaLink);
-    }
-    
-    
-    
-    
-    
-
-	/**
+    /**
 	 * [handleGeolocateSuccess description]
 	 * @param  {[type]} position [description]
 	 * @return {[type]}          [description]
 	 */
 	function handleGeolocateSuccess(position) {
 		map.moveTo([position.coords.latitude, position.coords.longitude]);
-		Ui.stopGeolocation();
+		ui.stopGeolocation();
 	}
 
 	/**
@@ -108,32 +31,131 @@ var Controller = (function ($) {
 	 */
 	function handleGeolocateError(error) {
 		switch (error.code) {
-            case error.UNKNOWN_ERROR:
-                Ui.stopGeolocation('The location acquisition process failed');
-                break;
-            case error.PERMISSION_DENIED:
-                Ui.deactivateGeolocation();
-                break;
-            case error.POSITION_UNAVAILABLE:
-                Ui.stopGeolocation('The position of the device could not be determined. One or more of the location providers used in the location acquisition process reported an internal error that caused the process to fail entirely.');
-                break;
-            case error.TIMEOUT:
-                Ui.stopGeolocation('The location acquisition timed out');
-                break;
+        case error.UNKNOWN_ERROR:
+            ui.stopGeolocation('The location acquisition process failed');
+            break;
+        case error.PERMISSION_DENIED:
+            ui.deactivateGeolocation();
+            break;
+        case error.POSITION_UNAVAILABLE:
+            ui.stopGeolocation('The position of the device could not be determined. One or more of the location providers used in the location acquisition process reported an internal error that caused the process to fail entirely.');
+            break;
+        case error.TIMEOUT:
+            ui.stopGeolocation('The location acquisition timed out');
+            break;
         }
 	}
-
-	/**
+    
+    /**
 	 * [handleGeolocateNoSupport description]
 	 */
 	function handleGeolocateNoSupport() {
-		Ui.deactivateGeolocation('Geolocation API is not supported by your browser.');
+		ui.deactivateGeolocation('Geolocation API is not supported by your browser.');
+	}
+    
+    /* *********************************************************************
+	 * GEOCODER
+	 * *********************************************************************/
+    
+    function handleGeolocationRequest() {
+        geolocator.locate(handleGeolocateSuccess, handleGeolocateError, handleGeolocateNoSupport);
+    }
+    
+    function handleGeocodeRequest(address) {
+        geocoder.find(address, handleGeocodeResults);
+    }
+    
+    function handleGeocodeLink(link) {
+        var permaLinkState = perma.parse(link);
+        map.moveTo([permaLinkState.lat, permaLinkState.lng]);
+    }
+    
+    function handleGeocodeResults(results) {
+        ui.updateGeocodeResultList(url, results);
+	}
+    
+    /* *********************************************************************
+	 * MAP
+	 * *********************************************************************/
+    
+    function handleLayerUpdate(layerInfo) {
+        osmatrix.getLegend(layerInfo.mode, layerInfo.layer, handleLegend);
+        map.updateMatrixLayer(layerInfo, osmatrix.getLayerUrl(layerInfo.mode, layerInfo.layer, layerInfo.times));
+    }
+    
+    function handleMapLoadStart() {
+		ui.setLayerLoadingState(true);
+	}
+
+	function handleMapLoadEnd() {
+        ui.setLayerLoadingState(false);
+	}
+
+	function handleMapChanged(mapState) {
+		perma.update(mapState.mode, mapState.layer, mapState.times, mapState.zoom, mapState.lon, mapState.lat);
+	}
+    
+    function handleUserMapClick(latlng) {
+        var layer = perma.parse(url).layer;
+        osmatrix.getFeatureInfoFromPoint(layer, latlng, handleFeatureInfoResult);
+    }
+    
+    /* *********************************************************************
+	 * OSMATRIX CONTROLLER
+	 * *********************************************************************/
+    
+    function handleMatrixCapabilities(capabilities) {
+        ui.initializeLayerSwitcher(capabilities);
+        initializeTheMap();
+    }
+    
+    function handleLegend(results) {
+        ui.updateLegend(results);
+    }
+    
+    function initializeTheMatrix() {
+        osmatrix.getCapabilities(handleMatrixCapabilities);
+    }
+    
+	/**
+	 * [setInitialMapLocation description]
+	 */
+	function initializeTheMap() {
+		var permaLink = perma.parse(url);
+		if (permaLink) {map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom); }
+            else {handleGeolocationRequest(); }
+        
+        ui.setLayerSwitcherToMode(permaLink);
+    }
+    
+    function handleFeatureInfoResult(result) {
+        map.updateFeatureInfoLayer(result);
+    }
+    
+    
+    /**
+	 * [initialize description]
+	 */
+	function initialize() {
+		map = new Map('map');
+
+		map.register('layer:loadStart', handleMapLoadStart);
+		map.register('layer:loadEnd', handleMapLoadEnd);
+		map.register('map:changed', handleMapChanged);
+        map.register('user:click', handleUserMapClick);
+        
+        ui.register('ui:geolocationRequest', handleGeolocationRequest);
+        ui.register('ui:geocodeRequest', handleGeocodeRequest);
+        ui.register('ui:geocodeLinkClick', handleGeocodeLink);
+        ui.register('ui:layerUpdate', handleLayerUpdate);
+        
+		initializeTheMatrix();
 	}
     
 
-	var controller = function() {};
-	controller.prototype.initialize = initialize;
-	return new controller();
-}(jQuery));
+	function Controller() {}
+	Controller.prototype.initialize = initialize;
+	return new Controller();
+}(window));
 
 window.onload = Controller.initialize;

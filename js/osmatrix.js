@@ -25,7 +25,6 @@ var OSMatrix = (function ($) {
     }
     
     function getLegend(mode, layer, callback) {
-        console.log(API_URL + 'map/' + layer + '/' + mode + '/legend');
         get(API_URL + 'map/' + layer + '/' + mode + '/legend', callback);
     }
     
@@ -37,9 +36,14 @@ var OSMatrix = (function ($) {
 		}
     }
     
+    function getFeatureInfoFromPoint(attribute, latlng, callback) {
+        get(API_URL + 'api/attributes/' + attribute + '?lat=' + latlng.lat + '&lon=' + latlng.lng, callback);
+    }
+    
     Osmatrix.prototype.getCapabilities = getCapabilities;
     Osmatrix.prototype.getLegend = getLegend;
     Osmatrix.prototype.getLayerUrl = getLayerUrl;
+    Osmatrix.prototype.getFeatureInfoFromPoint = getFeatureInfoFromPoint;
     
     return new Osmatrix();
 }(jQuery));

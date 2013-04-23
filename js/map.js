@@ -1,12 +1,6 @@
 var Map = (function () {
     "use strict";
 
-//    var MAP_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/map/",
-//        MODE = {
-//            timestamp: 1,
-//            diff: 2
-//        };
-
 	/**
 	 * Constructor
 	 * @param  {[type]} container [description]
@@ -46,6 +40,10 @@ var Map = (function () {
 			e.layer.on('loading', emitLayerLoadStartEvent);
 			e.layer.on('load', emitLayerLoadEndEvent);
 		}
+        
+        function emitUserClickEvent(e) {
+            self.emit('user:click', e.latlng);
+        }
 
 
 		this.theMap = L.map(container, {zoomControl: false}).setView([51.505, -0.09], 13);
@@ -56,6 +54,7 @@ var Map = (function () {
 		this.theMap.on('zoomend', emitMapChangedEvent);
 		this.theMap.on('moveend', emitMapChangedEvent);
 		this.theMap.on('layeradd', handleLayerAddEvent);
+        this.theMap.on('click', emitUserClickEvent);
 	}
 
 	/**
@@ -84,11 +83,27 @@ var Map = (function () {
 			lon: this.theMap.getCenter().lng
 		});
 	}
+    
+    function updateFeatureInfoLayer(features) {
+        if (this.featureInfoLayer) {this.theMap.removeLayer(this.featureInfoLayer); }
+        
+        this.featureInfoLayer = L.geoJson();
+        this.theMap.addLayer(this.featureInfoLayer);
+        
+        for (var i = 0, len = features.result.length; i < len; i++) {
+            console.log(JSON.stringify({"type": "Feature", "properties": {}, "geometry": features.result[i].geometry}));
+//            this.featureInfoLayer.addData({"type": "Feature", "geometry": features.result[i].geometry});
+            
+        }
+        
+        
+    }
 
 	map.prototype = new EventEmitter();
 	map.prototype.constructor = map;
 	map.prototype.moveTo = moveTo;
 	map.prototype.updateMatrixLayer = updateMatrixLayer;
+    map.prototype.updateFeatureInfoLayer = updateFeatureInfoLayer;
 
 	return map;
 }());
