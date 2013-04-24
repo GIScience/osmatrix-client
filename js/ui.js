@@ -259,21 +259,138 @@ var Ui = (function (w) {
 	 * FEATURE INFO
 	 * *********************************************************************/
     
-    function updateFeatureInfo(featureInfo, colors) {
-        var chart = $('#' + TOOLS.featureInfo + ' > #chart'),
-            width = chart.width(),
-            height = chart.height(),
+    function updateFeatureInfo(info, colors) {
+        var chartArea,
+            WIDTH = $('#' + TOOLS.featureInfo + ' #chart').width(),
+            HEIGHT = $('#' + TOOLS.featureInfo + ' #chart').height(),
             MARGIN_TOP = 10,
             MARGIN_LEFT = 60,
             MARGIN_BOTTOM = 20,
-            min, max;
+            min, max, xScale, yScale, xDomain = [];
         
-        for (var key in featureInfo.stats) {
-			min = (min ? d3.min[featureInfo.stats[key].min, min] : featureInfo.stats[key].min);
-            max = (max ? d3.max[featureInfo.stats[key].max, max] : featureInfo.stats[key].max);
+        for (var key in info.stats) {
+            min = d3.min([info.stats[key].min, min]);
+            max = d3.max([info.stats[key].max, max]);
 		}
         
-        console.log(featureInfo.colors);
+        if (info.attribute === 'DateOfLatestEdit' || info.attribute === 'dateOfEldestEdit') {MARGIN_LEFT += 20; }
+            else {min = 0; }
+        
+        for (var i = 0, len = info.timestamps.length; i < len; i++) {
+            xDomain.push(info.timestamps[i].timestamp.substring(0, info.timestamps[i].timestamp.lastIndexOf('-')));
+        }
+        
+        xScale = d3.scale.ordinal().domain(xDomain).rangePoints([MARGIN_LEFT + 10, WIDTH - 20]);
+        yScale = d3.scale.linear().domain([max,	min]).range([MARGIN_TOP + 10, (HEIGHT - MARGIN_BOTTOM)]);
+        
+        
+        
+        // **********************
+        // PREPARE THE CHART AREA
+        
+        $('#' + TOOLS.featureInfo + ' #chart').children().remove();
+        
+        chartArea = d3.select("div#chart").append("svg")
+			.attr("width", WIDTH)
+			.attr("height", HEIGHT);
+        
+        chartArea.selectAll(".yRule")
+		    	.data(yScale.ticks(5))
+			.enter().append("line")
+				.attr("class", "yRule")
+				.attr("x1", MARGIN_LEFT)
+				.attr("x2", WIDTH)
+				.attr("y1", yScale)
+				.attr("y2", yScale)
+				.style("stroke", "#ccc");
+				
+		chartArea.append("svg:line")
+				.attr("class", "yBase")
+				.attr("x1", MARGIN_LEFT)
+				.attr("x2", WIDTH)
+				.attr("y1", (HEIGHT - MARGIN_BOTTOM))
+				.attr("y2", (HEIGHT - MARGIN_BOTTOM))
+				.style("stroke", "#000")
+				.style("stroke-width", "1");
+        
+        chartArea.selectAll(".yLabel")
+    			.data(yScale.ticks(5))
+    		.enter().append("svg:text")
+			    .attr("class", "yLabel")
+				.text(function (d) {
+			    	if (info.attribute == 'DateOfLatestEdit' || info.attribute == 'dateOfEldestEdit') {
+			    		var date = new Date(d);
+			    		var m = (date.getMonth()+1) < 10 ? "0" + (date.getMonth()+1) : (date.getMonth()+1);
+			    		return date.getFullYear() + "-" + m;
+			    	} else {
+			    		return d;
+			    	}
+				})
+			    .attr("x", MARGIN_LEFT - 10)
+			    .attr("y", yScale)
+    			.attr("text-anchor", "end");
+        
+        
+        chartArea.selectAll(".xTicks")
+    			.data(xDomain)
+    		.enter().append("svg:line")
+			    .attr("class", "xTicks")
+			    .attr("x1", function(d) {return xScale(d);})
+				.attr("x2", function(d) {return xScale(d);})
+				.attr("y1", HEIGHT - MARGIN_BOTTOM)
+				.attr("y2", HEIGHT - MARGIN_BOTTOM + 5)
+				.style("stroke", "#000");
+
+ 		chartArea.selectAll(".xLabel")
+     			.data(xDomain)
+     		.enter().append("svg:text")
+ 			    .attr("class", "xLabel")
+ 				.text(function(d) {return d;})
+ 			    .attr("x", function(d) {return xScale(d);})
+ 			    .attr("y", HEIGHT)
+     			.attr("text-anchor", "middle");
+        
+        
+        // **********************
+        // PLOT THE GRAPH
+        
+        for (var i = 0, len = info.result.length; i < len; i++) {
+            var item = info.result[i],
+                line = d3.svg.line()
+                    .x(function(d) {return xScale(d.timestamp); })
+                    .y(function(d) {return yScale(d.value); })
+                    .interpolate("linear"),
+                value = [];
+            
+            for (var key in item.values) {
+				value.push({
+					"timestamp": key,
+					"value": item.values[key]
+				});
+			}
+            
+            chartArea.append("svg:path")
+				.attr("d", line(value))
+				.attr("stroke", colors[i])
+				.attr("fill", "transparent");
+            
+            chartArea.selectAll("path" + item.cell_id).data(value)
+				.enter().append("svg:circle")
+				.attr("class", "path" + item.cell_id)
+				.attr("cx", function(d) {return xScale(d.timestamp.substring(0, d.timestamp.lastIndexOf('-'))); })
+				.attr("cy", function(d) {return yScale(d.value); })			
+				.attr("r", 3)		
+				.attr("fill", "#ffffff")
+				.attr("stroke", colors[i])
+				.attr("stroke-width", 2);
+        }
+        
+        // **********************
+        // OPEN THE THING, YO!
+        
+        if (!$('#' + TOOLS.featureInfo + '> .content').hasClass('active')) {$('#' + TOOLS.featureInfo + ' button').click(); }
+        
+        console.log(info);
     }
     
     

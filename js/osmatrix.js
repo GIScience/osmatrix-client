@@ -1,7 +1,8 @@
-var OSMatrix = (function ($) {
+var OSMatrix = (function (w) {
     "use strict";
     
-    var PROXY_URL = "/cgi-bin/proxy.cgi?url=",
+    var $ = w.jQuery,
+        PROXY_URL = "/cgi-bin/proxy.cgi?url=",
         API_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/",
         MODE = {
             timestamp: 1,
@@ -46,4 +47,4 @@ var OSMatrix = (function ($) {
     Osmatrix.prototype.getFeatureInfoFromPoint = getFeatureInfoFromPoint;
     
     return new Osmatrix();
-}(jQuery));
+}(window));

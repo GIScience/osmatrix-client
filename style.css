@@ -438,8 +438,8 @@ p.desc {
 /* @group Feature Info */
 
 div#chart {
-	background-color: fuchsia;
 	height: 200px;
+	width: 350px;
 }
 
 /* @end */

@@ -7,7 +7,6 @@ var Controller = (function (w) {
         geolocator = w.Geolocator,
         geocoder = w.Geocoder,
         osmatrix = w.OSMatrix,
-        url = w.document.URL,
         HIGHLIGHT_COLORS = ['#E41A1C', '#377EB8', '#4DAF4A', '#984EA3', '#FF7F00', '#FFFF33', '#A65628'],
         map;
     
@@ -58,6 +57,10 @@ var Controller = (function (w) {
 	 * GEOCODER
 	 * *********************************************************************/
     
+    function handleGeocodeResults(results) {
+        ui.updateGeocodeResultList(w.document.URL, results);
+	}
+    
     function handleGeolocationRequest() {
         geolocator.locate(handleGeolocateSuccess, handleGeolocateError, handleGeolocateNoSupport);
     }
@@ -70,10 +73,6 @@ var Controller = (function (w) {
         var permaLinkState = perma.parse(link);
         map.moveTo([permaLinkState.lat, permaLinkState.lng]);
     }
-    
-    function handleGeocodeResults(results) {
-        ui.updateGeocodeResultList(url, results);
-	}
     
     /* *********************************************************************
 	 * MAP
@@ -97,7 +96,7 @@ var Controller = (function (w) {
 	}
     
     function handleUserMapClick(latlng) {
-        var layer = perma.parse(url).layer;
+        var layer = perma.parse(w.document.URL).layer;
         osmatrix.getFeatureInfoFromPoint(layer, latlng, handleFeatureInfoResult);
     }
     
@@ -122,7 +121,7 @@ var Controller = (function (w) {
 	 * [setInitialMapLocation description]
 	 */
 	function initializeTheMap() {
-		var permaLink = perma.parse(url);
+		var permaLink = perma.parse(w.document.URL);
 		if (permaLink) {map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom); }
             else {handleGeolocationRequest(); }
         

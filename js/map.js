@@ -44,23 +44,6 @@ var Map = (function () {
         function emitUserClickEvent(e) {
             self.emit('user:click', e.latlng);
         }
-        
-//        this.theMap = new ol.Map({
-//            layers: [
-//                new ol.layer.TileLayer({
-//                    source: new ol.source.Stamen({
-//                        layer: 'toner-lite'
-//                    })
-//                })
-//            ],
-//            renderers: ol.RendererHints.createFromQueryData(),
-//            target: container,
-//            view: new ol.View2D({
-//                center: ol.projection.transform([-0.09, 51.505], 'EPSG:4326', 'EPSG:3857'),
-//                zoom: 13
-//            })
-//        });
-
 
 		this.theMap = L.map(container, {zoomControl: false}).setView([51.505, -0.09], 13);
 
