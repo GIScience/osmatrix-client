@@ -7,7 +7,6 @@ body, form {
 
 div.tool > button {
 	color: #fff;
-	background-color: #2d3841;
 	border: 0;
 	margin: 0;
 	padding: 10px;
@@ -15,16 +14,18 @@ div.tool > button {
 	border: 0 solid rgba(0,0,0,0.4);
 	font-size: 1em;
 	z-index: 5000;
+	
+	background: #2d3841 url(img/icons.png) no-repeat;
 
-	transition: background-color 0.5s ease;
-	-moz-transition: background-color 0.5s ease; /* Firefox 4 */
-	-webkit-transition: background-color 0.5s ease; /* Safari and Chrome */
-	-o-transition: background-color 0.5s ease; /* Opera */
+	transition: background 0.5s ease;
+	-moz-transition: background 0.5s ease; /* Firefox 4 */
+	-webkit-transition: background 0.5s ease; /* Safari and Chrome */
+	-o-transition: background 0.5s ease;
 }
 		
 div.tool > button:hover {
-	background-color: #3f4f5a;
 	cursor:pointer;
+	background-color: #3f4f5a;
 }
 
 div.tool > button span {
@@ -102,7 +103,7 @@ section#map {
 }
 
 section#map.showSidebar {
-    left: 300px;
+    left: 380px;
 }
 
 /* @end */
@@ -138,12 +139,44 @@ div#toolbox {
 			position: relative;
 		}
 		
+		div#toolbox div#geolocate > button,
+		div#toolbox div#geolocate > button:hover {
+			background-position: -105px -35px;
+		}
+		
+		div#toolbox div#geolocate > button.active,
+		div#toolbox div#geolocate > button.loading {
+			background-position: -105px 0;
+		}
+		
+		div#toolbox div#searchPlace > button,
+		div#toolbox div#searchPlace > button:hover {
+			background-position: -35px -35px;
+		}
+		
+		div#toolbox div#searchPlace > button.active,
+		div#toolbox div#searchPlace > button.loading {
+			background-position: -35px 0;
+		}
+		
+		div#toolbox div#layer > button,
+		div#toolbox div#layer > button:hover {
+			background-position: 0 -35px;
+		}
+		
+		div#toolbox div#layer > button.active,
+		div#toolbox div#layer > button.loading {
+			background-position: 0 0;
+		}
+		
 		div#toolbox div.tool > button.loading,
 		div#toolbox div.tool > button.active {
 			border-width: 0 1px 1px 0;
 			-webkit-border-radius: 0 0 3px 0;
 			border-radius: 0 0 3px 0;
 		}
+		
+		
 
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
@@ -306,7 +339,7 @@ div#searchPlace > div.content > ul.resultList {
 }
 
 #sidebar.active {
-	width: 335px;
+	width: 415px;
 }
 
 #sidebar .content {
@@ -325,7 +358,7 @@ div#searchPlace > div.content > ul.resultList {
 }
 
 #sidebar .content.active {
-	width: 270px;
+	width: 350px;
 	padding: 10px 15px;
 	/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
 }
@@ -350,12 +383,32 @@ div#sidebar div#legend > button {
 	bottom: 50px;
 }
 
+div#sidebar div#legend > button,
+div#sidebar div#legend > button:hover {
+	background-position: -70px -35px;
+}
+
+div#sidebar div#legend > button.active,
+div#sidebar div#legend > button.loading {
+	background-position: -70px 0;
+}
+
 div#sidebar div#featureInfo > button {
 	bottom: 100px;
 }
 
+div#sidebar div#featureInfo > button,
+div#sidebar div#featureInfo > button:hover {
+	background-position: -140px -35px;
+}
+
+div#sidebar div#featureInfo > button.active,
+div#sidebar div#featureInfo > button.loading {
+	background-position: -140px 0;
+}
+
 div#sidebar.active div.tool > button {
-	left: 301px;
+	left: 381px;
 }
 
 /* @group Legend */
@@ -378,6 +431,15 @@ div#sidebar.active div.tool > button {
 p.desc {
 	border-bottom: 1px solid #e5e5e5;
 	padding-bottom: 15px;
+}
+
+/* @end */
+
+/* @group Feature Info */
+
+div#chart {
+	background-color: fuchsia;
+	height: 200px;
 }
 
 /* @end */

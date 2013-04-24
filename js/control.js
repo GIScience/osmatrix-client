@@ -131,6 +131,7 @@ var Controller = (function (w) {
     
     function handleFeatureInfoResult(result) {
         map.updateFeatureInfoLayer(result, HIGHLIGHT_COLORS);
+        ui.updateFeatureInfo(result, HIGHLIGHT_COLORS);
     }
     
     

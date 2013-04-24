@@ -1,7 +1,9 @@
-var Ui = (function ($) {
+var Ui = (function (w) {
     'use strict';
     
-    var TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend', message: 'message' },
+    var $ = w.jQuery,
+        d3 = w.d3,
+        TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend', featureInfo: 'featureInfo', message: 'message' },
         theInterface;
     
     
@@ -254,6 +256,29 @@ var Ui = (function ($) {
     
     
     /* *********************************************************************
+	 * FEATURE INFO
+	 * *********************************************************************/
+    
+    function updateFeatureInfo(featureInfo, colors) {
+        var chart = $('#' + TOOLS.featureInfo + ' > #chart'),
+            width = chart.width(),
+            height = chart.height(),
+            MARGIN_TOP = 10,
+            MARGIN_LEFT = 60,
+            MARGIN_BOTTOM = 20,
+            min, max;
+        
+        for (var key in featureInfo.stats) {
+			min = (min ? d3.min[featureInfo.stats[key].min, min] : featureInfo.stats[key].min);
+            max = (max ? d3.max[featureInfo.stats[key].max, max] : featureInfo.stats[key].max);
+		}
+        
+        console.log(featureInfo.colors);
+    }
+    
+    
+    
+    /* *********************************************************************
 	 * MESSAGE
 	 * *********************************************************************/
     
@@ -292,10 +317,11 @@ var Ui = (function ($) {
     Ui.prototype.stopGeolocation = stopGeolocation;
     Ui.prototype.deactivateGeolocation = deactivateGeolocation;
     Ui.prototype.updateLegend = updateLegend;
+    Ui.prototype.updateFeatureInfo = updateFeatureInfo;
     Ui.prototype.setLayerLoadingState = setLayerLoadingState;
     
     
     theInterface = new Ui();
     
     return theInterface;
-}(jQuery));
+}(window));
