@@ -266,7 +266,17 @@ var Ui = (function (w) {
             MARGIN_TOP = 10,
             MARGIN_LEFT = 60,
             MARGIN_BOTTOM = 20,
-            min, max, xScale, yScale, xDomain = [];
+            min, max, xScale, yScale, xDomain = [],
+            line = d3.svg.line()
+                    .x(function(d) {return xScale(d.timestamp); })
+                    .y(function(d) {return yScale(d.value); })
+                    .interpolate("linear"),
+            stddevArea = d3.svg.area()
+                    .x(function(d) { return xScale(d.timestamp); })
+                    .y0(function(d) {return yScale(d.lower); })
+                    .y1(function(d) {return yScale(d.upper); }),
+            averages = [],
+            stddev = [];
         
         for (var key in info.stats) {
             min = d3.min([info.stats[key].min, min]);
@@ -284,15 +294,34 @@ var Ui = (function (w) {
         yScale = d3.scale.linear().domain([max,	min]).range([MARGIN_TOP + 10, (HEIGHT - MARGIN_BOTTOM)]);
         
         
+        $('#' + TOOLS.featureInfo + ' #chart').children().remove();
+        chartArea = d3.select("div#chart").append("svg")
+			.attr("width", WIDTH)
+			.attr("height", HEIGHT);
+        
+        // **********************
+        // PLOT STATISTICAL MEASURES
+        
+        for (var key in info.stats) {
+            averages.push({"timestamp": key, "value": info.stats[key].avg});
+            stddev.push({"timestamp": key, "upper": info.stats[key].avg + info.stats[key].std, "lower": info.stats[key].avg - info.stats[key].std});
+        }
+        
+        chartArea.append("svg:path")
+              .datum(stddev)
+              .attr("fill", '#f0f0f0')   
+              .attr("d", stddevArea);
+        
+        chartArea.append("svg:path")
+				.attr("d", line(averages))
+				.attr("stroke", '#bbb')
+                .attr("stroke-width", 2)
+				.attr("fill", "transparent");
+        
         
         // **********************
         // PREPARE THE CHART AREA
         
-        $('#' + TOOLS.featureInfo + ' #chart').children().remove();
-        
-        chartArea = d3.select("div#chart").append("svg")
-			.attr("width", WIDTH)
-			.attr("height", HEIGHT);
         
         chartArea.selectAll(".yRule")
 		    	.data(yScale.ticks(5))
@@ -351,22 +380,16 @@ var Ui = (function (w) {
      			.attr("text-anchor", "middle");
         
         
+        
         // **********************
         // PLOT THE GRAPH
         
         for (var i = 0, len = info.result.length; i < len; i++) {
             var item = info.result[i],
-                line = d3.svg.line()
-                    .x(function(d) {return xScale(d.timestamp); })
-                    .y(function(d) {return yScale(d.value); })
-                    .interpolate("linear"),
                 value = [];
             
             for (var key in item.values) {
-				value.push({
-					"timestamp": key,
-					"value": item.values[key]
-				});
+				value.push({"timestamp": key, "value": item.values[key]});
 			}
             
             chartArea.append("svg:path")
@@ -389,8 +412,6 @@ var Ui = (function (w) {
         // OPEN THE THING, YO!
         
         if (!$('#' + TOOLS.featureInfo + '> .content').hasClass('active')) {$('#' + TOOLS.featureInfo + ' button').click(); }
-        
-        console.log(info);
     }
     
     
