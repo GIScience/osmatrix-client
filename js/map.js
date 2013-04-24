@@ -44,6 +44,22 @@ var Map = (function () {
         function emitUserClickEvent(e) {
             self.emit('user:click', e.latlng);
         }
+        
+//        this.theMap = new ol.Map({
+//            layers: [
+//                new ol.layer.TileLayer({
+//                    source: new ol.source.Stamen({
+//                        layer: 'toner-lite'
+//                    })
+//                })
+//            ],
+//            renderers: ol.RendererHints.createFromQueryData(),
+//            target: container,
+//            view: new ol.View2D({
+//                center: ol.projection.transform([-0.09, 51.505], 'EPSG:4326', 'EPSG:3857'),
+//                zoom: 13
+//            })
+//        });
 
 
 		this.theMap = L.map(container, {zoomControl: false}).setView([51.505, -0.09], 13);
@@ -84,16 +100,25 @@ var Map = (function () {
 		});
 	}
     
-    function updateFeatureInfoLayer(features) {
+    function updateFeatureInfoLayer(features, colors) {
         if (this.featureInfoLayer) {this.theMap.removeLayer(this.featureInfoLayer); }
         
-        this.featureInfoLayer = L.geoJson();
+        this.featureInfoLayer = L.geoJson(null, {
+            style: function (feature) {
+                return {
+                    fillColor: feature.properties.color,
+                    fillOpacity: 0.7,
+                    color: 'white',
+                    opacity: 1,
+                    weight: 2
+                };
+            }
+        });
         this.theMap.addLayer(this.featureInfoLayer);
         
         for (var i = 0, len = features.result.length; i < len; i++) {
-            console.log(JSON.stringify({"type": "Feature", "properties": {}, "geometry": features.result[i].geometry}));
-//            this.featureInfoLayer.addData({"type": "Feature", "geometry": features.result[i].geometry});
-            
+            var color = colors[i];
+            this.featureInfoLayer.addData({"type": "Feature", "properties": {"color": color}, "geometry": features.result[i].geometry});
         }
         
         

@@ -8,6 +8,7 @@ var Controller = (function (w) {
         geocoder = w.Geocoder,
         osmatrix = w.OSMatrix,
         url = w.document.URL,
+        HIGHLIGHT_COLORS = ['#E41A1C', '#377EB8', '#4DAF4A', '#984EA3', '#FF7F00', '#FFFF33', '#A65628'],
         map;
     
     /* *********************************************************************
@@ -129,7 +130,7 @@ var Controller = (function (w) {
     }
     
     function handleFeatureInfoResult(result) {
-        map.updateFeatureInfoLayer(result);
+        map.updateFeatureInfoLayer(result, HIGHLIGHT_COLORS);
     }
     
     

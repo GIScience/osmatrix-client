@@ -37,7 +37,7 @@ var OSMatrix = (function ($) {
     }
     
     function getFeatureInfoFromPoint(attribute, latlng, callback) {
-        get(API_URL + 'api/attributes/' + attribute + '?lat=' + latlng.lat + '&lon=' + latlng.lng, callback);
+        get(API_URL + 'api/attributes/' + attribute + '?proj=4326&lat=' + latlng.lat + '&lon=' + latlng.lng, callback);
     }
     
     Osmatrix.prototype.getCapabilities = getCapabilities;
