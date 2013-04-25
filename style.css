@@ -1,34 +1,113 @@
-body {
+body, form {
 	font-family: 'Droid Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 15px;
-	line-height: 1;
+	font-size: 13px;
+	line-height: 15px;
 	color: #2d3841;
 }
 
+div.tool > button {
+	color: #fff;
+	border: 0;
+	margin: 0;
+	padding: 10px;
+	line-height: 15px;
+	border: 0 solid rgba(0,0,0,0.4);
+	font-size: 1em;
+	z-index: 5000;
+	
+	background: #2d3841 url(img/icons.png) no-repeat;
 
+	transition: background-color 0.05s ease;
+	-moz-transition: background-color 0.05s ease; /* Firefox 4 */
+	-webkit-transition: background-color 0.05s ease; /* Safari and Chrome */
+	-o-transition: background-color 0.05s ease;
+}
+		
+div.tool > button:hover {
+	cursor:pointer;
+	background-color: #3f4f5a;
+}
+
+div.tool > button span {
+	display: inline-block;
+	width: 15px;
+}
+
+div.tool > button.loading,
+div.tool > button.active {
+	background-color: #fff;
+	color: #2d3841;
+	margin-left: -1px;
+}
 
 /* @group head */
 
-h1 {
+header {
 	position: absolute;
-	bottom: 3em;
-	left: 0em;
-	z-index: 1000;
-
-	padding: 0.25em 0.5em 0.25em 2em;
-
-	font-size: 4em;
-	font-weight: normal;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	color: #fff;
+	z-index: 10000;
+	
 	background-color: #2d3841;
+	transition: right 0.5s;
+	-moz-transition: right 0.5s; /* Firefox 4 */
+	-webkit-transition: right 0.5s; /* Safari and Chrome */
+	-o-transition: right 0.5s; /* Opera */
 }
 
-h1.hide {
-	left: -99em;
-	transition: left 2s;
-	-moz-transition: left 2s; /* Firefox 4 */
-	-webkit-transition: left 2s; /* Safari and Chrome */
-	-o-transition: left 2s; /* Opera */
+header.hide {
+	right: 100%;
+	overflow: hidden;
+}
+
+h1 {
+	position: absolute;
+	left: 3em;
+	bottom: 6em;
+	
+	z-index: 10000;
+	line-height: 1;
+
+	margin: 0;
+
+	font-size: 52px;
+	font-weight: normal;
+}
+
+header > h1 > span {
+	display: block;
+	font-size: 26px;
+}
+
+header > p {
+	display: block;
+	font-size: 26px;
+	
+	position: absolute;
+	left: 6em;
+	bottom: 8em;
+	padding-left: 60px;
+	background: url(img/ajax-loader_head.gif) no-repeat 0 50%;
+}
+
+h2 {
+	font-size: 15px;
+	font-weight: normal;
+	margin: 0 0 10px 0;
+	padding: 4px 0 7px 0;
+	border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+
+
+h3 {
+	font-size: 15px;
+	margin-bottom: 7px;
+	line-height: 30px;
+	font-weight: normal;
 }
 
 /* @end */
@@ -42,6 +121,17 @@ section#map {
 	bottom: 0;
 	left: 0;
 	z-index: 500;
+	border-left: 1px solid rgba(0,0,0,0.4);
+	
+	transition: left 0.5s ease;
+	-moz-transition: left 0.5s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease; /* Opera */
+
+}
+
+section#map.showSidebar {
+    left: 380px;
 }
 
 /* @end */
@@ -51,7 +141,7 @@ section#map {
 
 div#toolbox {
 	position: absolute;
-	top: 1em;
+	top: 0;
 	right: 1em;
 	z-index: 1000;
 }
@@ -61,7 +151,7 @@ div#toolbox {
 		float: left;
 		margin-left: 10px;
 		overflow: hidden;
-		padding: 5px;
+        padding: 0 3px 3px 3px;
 
 		transition: width 0.5s;
 		-moz-transition: width 0.5s; /* Firefox 4 */
@@ -69,51 +159,61 @@ div#toolbox {
 		-o-transition: width 0.5s; /* Opera */
 	}
 	
-		div#toolbox div.tool button {
-			color: #fff;
-			background-color: #2d3841;
-			border: 0;
-			margin: 0;
-			padding: 10px;
-			line-height: 15px;
-			float: right;
-			font-size: 1em;
-
-			box-shadow: 0 0 8px rgba(0,0,0,0.4);
-			-webkit-border-radius: 3px;
-			border-radius: 3px;
-
-			transition: background-color 0.5s ease;
-			-moz-transition: background-color 0.5s ease; /* Firefox 4 */
-			-webkit-transition: background-color 0.5s ease; /* Safari and Chrome */
-			-o-transition: background-color 0.5s ease; /* Opera */
+		div#toolbox div.tool > button {
+			float: left;
+			border-width: 0 1px 1px 1px;
+			-webkit-border-radius: 0 0 5px 5px;
+			border-radius: 0 0 5px 5px;
+			position: relative;
 		}
 		
-		div#toolbox div.tool button:hover {
-			background-color: #3f4f5a;
-			cursor:pointer;
-			
+		div#toolbox div#geolocate > button,
+		div#toolbox div#geolocate > button:hover {
+			background-position: -105px -35px;
 		}
 		
-		div#toolbox div.tool button.loading,
-		div#toolbox div.tool button.active {
-			background-color: #abc6c8;
-			-webkit-border-radius: 0 3px 3px 0;
-			border-radius: 0 3px 3px 0;
+		div#toolbox div#geolocate > button.active,
+		div#toolbox div#geolocate > button.loading {
+			background-position: -105px 0;
 		}
 		
-			div#toolbox div.tool button span {
-				display: inline-block;
-				width: 15px;
-			}
+		div#toolbox div#searchPlace > button,
+		div#toolbox div#searchPlace > button:hover {
+			background-position: -35px -35px;
+		}
+		
+		div#toolbox div#searchPlace > button.active,
+		div#toolbox div#searchPlace > button.loading {
+			background-position: -35px 0;
+		}
+		
+		div#toolbox div#layer > button,
+		div#toolbox div#layer > button:hover {
+			background-position: 0 -35px;
+		}
+		
+		div#toolbox div#layer > button.active,
+		div#toolbox div#layer > button.loading {
+			background-position: 0 0;
+		}
+		
+		div#toolbox div.tool > button.loading,
+		div#toolbox div.tool > button.active {
+			border-width: 0 1px 1px 0;
+			-webkit-border-radius: 0 0 3px 0;
+			border-radius: 0 0 3px 0;
+		}
+		
+		
 
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
+			position: relative;
 			width: 0;
-			float: right;
-			border: 0;
+			float: left;
 			overflow: hidden;
-			box-shadow: 0 0 8px rgba(0,0,0,0.4);
+			border: 0 solid rgba(0,0,0,0.4);
+			margin-right: 0px;
 
 			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease;
 			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease; /* Firefox 4 */
@@ -131,14 +231,16 @@ div#toolbox {
 			div#toolbox div.tool div.spinner {
 				width: 0;
 				height: 35px;
-				background: #abc6c8 url(img/ajax-loader.gif) no-repeat 50% 50%;
-				-webkit-border-radius: 3px 0 0 3px;
-				border-radius: 3px 0 0 3px;
+				background: #fff url(img/ajax-loader.gif) no-repeat 50% 50%;
+				-webkit-border-radius: 0 0 0 3px;
+				border-radius: 0 0 0 3px;
+				margin-right: -1px;
+				z-index: 5000;
 			}
 
 			div#toolbox div.tool div.spinner.loading {
 				width: 35px;
-				border-right: 1px solid #96aeb0;
+				border-width: 0 0 1px 1px;
 			}
 		
 		/**
@@ -150,34 +252,25 @@ div#toolbox {
 			width: 0;
 			height: 0;
 			padding: 0;
-			background-color: #abc6c8;
-			float: right;
+			background-color: #fff;
 			color: #2d3841;
+			z-index: 4000;
 		}
-
-			div#toolbox div.tool div.content h2 {
-				font-size: 1em;
-				font-weight: normal;
-				margin: 0 0 10px 0;
-				padding-bottom: 10px;
-				border-bottom: 1px solid #96aeb0;
-			}
 
 			div#toolbox div.tool div.content.active {	
 				width: 300px;
 				height: auto;
 				max-height: 700px;
-				padding: 10px;			
-				border-right: 1px solid #96aeb0;
-				-webkit-border-radius: 3px 0 3px 3px;
-				border-radius: 3px 0 0 3px;
+				padding: 10px 15px;
+				-webkit-border-radius: 0 0 5px 5px;
+				border-radius: 0 0 5px 5px;
+				border-width: 0 1px 1px 1px;
 			}
 
 /* @group Search Place */
 
 div#searchPlace > div.content > input[type="text"] {
 	width: 288px;
-	border: 1px solid #96aeb0;
 	padding: 5px;
 	font-size: 12px;
 	color: #2d3841;
@@ -187,9 +280,6 @@ div#searchPlace > div.content > ul.resultList {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	background-color: #e6eeef;
-	border: 1px solid #96aeb0;
-	border-top-width: 0;
 	height: auto;
 	max-height: 550px;
 	overflow-y: auto;
@@ -204,15 +294,245 @@ div#searchPlace > div.content > ul.resultList {
 		display: block;
 		color: #2d3841;
 		text-decoration: none;
-		padding: 7px 15px;
+		padding: 7px 5px;
         line-height: 1.2;
+        background-color: #fff;
+        
+        transition: background-color 0.1s ease;
+		-moz-transition: background-color 0.1s ease; /* Firefox 4 */
+		-webkit-transition: background-color 0.1s ease; /* Safari and Chrome */
+		-o-transition: background-color 0.1s ease; /* Opera */
 	}
 	
 	div#searchPlace > div.content > ul.resultList li a:hover {
 		background-color: #2d3841;
 		color: #fff;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
 	}
 
 /* @end */
+
+
+/* @group Layer Switcher */
+
+#layer fieldset {
+	margin-bottom: 30px;
+}
+
+#layer fieldset legend {
+	font-size: 15px;
+	margin-bottom: 15px;
+	line-height: 30px;
+}
+
+	#layer select {
+		width: 298px;
+		font-size: 13px;
+	}
+	
+	#layer fieldset .btn-group button {
+		margin-right: 0;
+		width: 150px;
+		font-size: 13px;
+	}
+	
+	#layer fieldset label {
+		font-size: 13px;
+	}
+	
+	#layer fieldset label:hover {
+		cursor: pointer;
+	}
+
+
+
+/* @end */
+
+/* @end */
+
+
+/* @group Sidebar */
+
+#sidebar {
+	z-index: 750;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 35px;
+	
+	transition: width 0.5s ease, padding 0.5s ease;
+	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+}
+
+#sidebar.active {
+	width: 415px;
+}
+
+#sidebar .content {
+	width: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+	
+	transition: width 0.5s ease, padding 0.5s ease;
+	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+}
+
+#sidebar .content.active {
+	width: 350px;
+	padding: 10px 15px;
+	/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
+}
+
+div#sidebar div.tool > button {
+	float: left;
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 5px 5px 0;
+	position: absolute;
+	left: 0px;
+	margin-left: -1px;
+	
+	border-width: 1px 1px 1px 0;
+	
+	transition: left 0.5s ease, background-color 0.05s ease;
+	-moz-transition: left 0.5s ease, background-color 0.05s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease, background-color 0.05s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease, background-color 0.05s ease; /* Opera */
+}
+
+div#sidebar div#legend > button {
+	bottom: 50px;
+}
+
+div#sidebar div#legend > button,
+div#sidebar div#legend > button:hover {
+	background-position: -70px -35px;
+}
+
+div#sidebar div#legend > button.active,
+div#sidebar div#legend > button.loading {
+	background-position: -70px 0;
+}
+
+div#sidebar div#featureInfo > button {
+	bottom: 100px;
+}
+
+div#sidebar div#featureInfo > button,
+div#sidebar div#featureInfo > button:hover {
+	background-position: -140px -35px;
+}
+
+div#sidebar div#featureInfo > button.active,
+div#sidebar div#featureInfo > button.loading {
+	background-position: -140px 0;
+}
+
+div#sidebar.active div.tool > button {
+	left: 381px;
+}
+
+/* @group Legend */
+
+#labels .legendItem {
+	padding: 5px 0;
+	height: 17px;
+	/*line-height: 17px;*/
+	vertical-align: top;
+}
+
+#labels .legendItem span.graphic {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #ddd;
+	margin-right: 15px;
+}
+
+p.desc {
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 15px;
+}
+
+/* @end */
+
+/* @group Feature Info */
+
+div#chart {
+	height: 200px;
+	width: 350px;
+}
+
+/* @end */
+
+/* @end */
+
+/* @group Message */
+
+div#message {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	background-color: rgba(0,0,0,0.7);
+}
+
+	div#message > div#msgContainer {
+		position: absolute;
+		top: 50%;
+		min-height: 250px;
+		margin-top: -125px;
+		
+		left: 50%;
+		width: 500px;
+		margin-left: -250px;
+		
+		background-color: #fff;
+		border: 1px solid #e5e5e5;
+		box-shadow: 0 0 4px rgba(0,0,0,0.4);
+	}
+	
+		div#message > div#msgContainer > h3 {
+			padding: 0 30px 15px;
+			border-bottom: 1px solid #e5e5e5;
+		}
+		
+		div#message.error > div#msgContainer > h3 {
+			color: #ae3825;
+		}
+		
+		div#message.warning > div#msgContainer > h3 {
+			color: #fba400;
+		}
+		
+		div#message.info > div#msgContainer > h3 {
+			color: #00ace2;
+		}
+		
+		div#message > div#msgContainer > p {
+			padding: 0 30px;
+			line-height: 1.5;
+		}
+		
+		div#message > div#msgContainer > div#actions {
+			padding: 15px 30px;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			border-top: 1px solid #e5e5e5;
+			text-align: right;
+		}
 
 /* @end */

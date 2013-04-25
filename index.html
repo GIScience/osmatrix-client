@@ -2,67 +2,134 @@
 
 <html>
 <head>
-	<title>HTML5 Map Viewer</title>
+	<title>OSMatrix</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="" />
 
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" />
-	<link rel="stylesheet" type="text/css" href="style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="style.css" media="all">
 	
+    
+    <!--   JQUERY    -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css">
+    
+    
+    
+    <!--   LEAFLET    -->
+	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+	<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.1"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css">
 	<!--[if lte IE 8]>
 	    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css">
 	<![endif]-->
-
-	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
-	<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.2.1"></script>	
-
-	<script type="text/javascript" src="js/event.js"></script>
-	<script type="text/javascript" src="js/permalink.js"></script>
-	<script type="text/javascript" src="js/geolocator.js"></script>
-	<script type="text/javascript" src="js/geocoder.js"></script>
-	<script type="text/javascript" src="js/map.js"></script>
-	<script type="text/javascript" src="js/control.js"></script>
-	
+    
+    
+    
+    <!--   D3    -->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 </head>
 
 <body>
-	<!-- <h1>The HTML5 Map Viewer</h1> -->
+    <header>
+        <h1>OSMatrix<span>&mdash; visualizing spatio-temporal characteristics of OpenStreetMap</span></h1>
+        <p>initializing...</p>
+    </header>
+	
 	<section id="map"></section>
+    
+    
 	<div id="toolbox">
 		<div id="geolocate" class="tool">
-			<button><span>G</span></button>
 			<div class="spinner"></div>
+			<button><span></span></button>
 		</div>
 
 		<div id="searchPlace" class="tool">
-			<button><span>F</span></button>
+			
+			<div class="spinner"></div>
 			<div class="content">
 				<h2>Find place</h2>
 				<input type="text">
-				<ul class="resultList">
-				<!-- 	<li><a href="#">Gera</a></li>
-					<li><a href="#">Jena</a></li>
-					<li><a href="#">Enschede</a></li>
-					<li><a href="#">Mannheim</a></li>
-					<li><a href="#">Heidelberg</a></li> -->
-				</ul>
+				<ul class="resultList"></ul>
 			</div>
-			<div class="spinner"></div>
+			<button><span></span></button>
 		</div>
 
 		<div id="layer" class="tool">
-			<button><span>L</span></button>
+			<div class="spinner"></div>
+			
 			<div class="content">
 				<h2>Choose Layer</h2>
+                <form>
+                    <fieldset>
+                        <legend>Select characteristic</legend>
+                        <select id="characteristics"></select>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Select display mode</legend>
+                        <div class="btn-group" id="layerMode">
+                            <button class="btn btn-success active" type="button" value="timestamp">Single</button>
+                            <button class="btn" type="button" value="diff">Comparison</button>
+                        </div>
+                        
+                    </fieldset>
+                    
+                    <fieldset id="timestamps">
+                        <legend>Select timestamps</legend>
+                    </fieldset>
+
+                    <button type="submit" class="btn">Update layer</button>
+                </form>
 			</div>
-			<div class="spinner"></div>
+
+			<button><span></span></button>
 		</div>
 	</div>
 
 
+    <div id="sidebar">
+        <div id="featureInfo" class="tool">
+            <div class="content">
+                <h2>Feature info</h2>
+                <div id="chart">
+                    <p>Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.</p>
+                </div>
+            </div>
+            <button><span></span></button>
+        </div>
+        
+        <div id="legend" class="tool">
+            <div class="content">
+                <h2>Legend</h2>
+                <h3></h3>
+                <p class="desc"></p>
+                <div id="labels"></div>
+            </div>
+            <button><span></span></button>
+        </div>
+    </div>
+    
+    <div id="message">
+        <div id="msgContainer">
+            <h3>Error Yo!</h3>
+            <p>The position of the device could not be determined. One or more of the location providers used in the location acquisition process reported an internal error that caused the process to fail entirely.</p>
+            <div id="actions">
+                <button type="button" class="btn">Dismiss</button>
+            </div>
+        </div>
+    </div>
 </body>
+    
+<script type="text/javascript" src="js/osmatrix.js"></script>
+<script type="text/javascript" src="js/event.js"></script>
+<script type="text/javascript" src="js/permalink.js"></script>
+<script type="text/javascript" src="js/geolocator.js"></script>
+<script type="text/javascript" src="js/geocoder.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/ui.js"></script>
+<script type="text/javascript" src="js/control.js"></script>
 
 </html>
