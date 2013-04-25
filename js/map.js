@@ -45,7 +45,14 @@ var Map = (function () {
             self.emit('user:click', e.latlng);
         }
 
-		this.theMap = L.map(container, {zoomControl: false}).setView([51.505, -0.09], 13);
+		this.theMap = L.map(container, {
+            center: [51.505, -0.09],
+            zoom: 13,
+            minZoom: 3,
+            maxZoom: 12,
+            maxBounds: new L.LatLngBounds(new L.LatLng(34.66682, -10.53538), new L.LatLng(61.07390, 38.00957)),
+            zoomControl: false
+        });
 
 		var tiledLayer = new L.StamenTileLayer("toner-lite");
 		this.theMap.addLayer(tiledLayer);
@@ -67,6 +74,7 @@ var Map = (function () {
 	}
 
 	function updateMatrixLayer(mode, layerUrl) {
+        this.updateFeatureInfoLayer(); 
 		if (this.matrixLayer) {this.theMap.removeLayer(this.matrixLayer); }
 		this.matrixLayer = L.tileLayer(layerUrl, {
             maxZoom: 18
@@ -86,25 +94,25 @@ var Map = (function () {
     function updateFeatureInfoLayer(features, colors) {
         if (this.featureInfoLayer) {this.theMap.removeLayer(this.featureInfoLayer); }
         
-        this.featureInfoLayer = L.geoJson(null, {
-            style: function (feature) {
-                return {
-                    fillColor: feature.properties.color,
-                    fillOpacity: 0.7,
-                    color: 'white',
-                    opacity: 1,
-                    weight: 2
-                };
+        if (features && colors) {
+            this.featureInfoLayer = L.geoJson(null, {
+                style: function (feature) {
+                    return {
+                        fillColor: feature.properties.color,
+                        fillOpacity: 0.7,
+                        color: 'white',
+                        opacity: 1,
+                        weight: 2
+                    };
+                }
+            });
+            this.theMap.addLayer(this.featureInfoLayer);
+            
+            for (var i = 0, len = features.result.length; i < len; i++) {
+                var color = colors[i];
+                this.featureInfoLayer.addData({"type": "Feature", "properties": {"color": color}, "geometry": features.result[i].geometry});
             }
-        });
-        this.theMap.addLayer(this.featureInfoLayer);
-        
-        for (var i = 0, len = features.result.length; i < len; i++) {
-            var color = colors[i];
-            this.featureInfoLayer.addData({"type": "Feature", "properties": {"color": color}, "geometry": features.result[i].geometry});
         }
-        
-        
     }
 
 	map.prototype = new EventEmitter();

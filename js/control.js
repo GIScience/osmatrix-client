@@ -81,6 +81,7 @@ var Controller = (function (w) {
     function handleLayerUpdate(layerInfo) {
         osmatrix.getLegend(layerInfo.mode, layerInfo.layer, handleLegend);
         map.updateMatrixLayer(layerInfo, osmatrix.getLayerUrl(layerInfo.mode, layerInfo.layer, layerInfo.times));
+        ui.updateFeatureInfo();
     }
     
     function handleMapLoadStart() {

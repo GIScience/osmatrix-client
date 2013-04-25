@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>HTML5 Map Viewer</title>
+	<title>OSMatrix</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="" />
@@ -32,7 +32,11 @@
 </head>
 
 <body>
-<!--	<h1>OSMatrix</h1>-->
+    <header>
+        <h1>OSMatrix<span>&mdash; visualizing spatio-temporal characteristics of OpenStreetMap</span></h1>
+        <p>initializing...</p>
+    </header>
+	
 	<section id="map"></section>
     
     
@@ -90,7 +94,9 @@
         <div id="featureInfo" class="tool">
             <div class="content">
                 <h2>Feature info</h2>
-                <div id="chart"></div>
+                <div id="chart">
+                    <p>Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.</p>
+                </div>
             </div>
             <button><span></span></button>
         </div>

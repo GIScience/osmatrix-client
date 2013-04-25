@@ -17,10 +17,10 @@ div.tool > button {
 	
 	background: #2d3841 url(img/icons.png) no-repeat;
 
-	transition: background 0.5s ease;
-	-moz-transition: background 0.5s ease; /* Firefox 4 */
-	-webkit-transition: background 0.5s ease; /* Safari and Chrome */
-	-o-transition: background 0.5s ease;
+	transition: background-color 0.05s ease;
+	-moz-transition: background-color 0.05s ease; /* Firefox 4 */
+	-webkit-transition: background-color 0.05s ease; /* Safari and Chrome */
+	-o-transition: background-color 0.05s ease;
 }
 		
 div.tool > button:hover {
@@ -42,27 +42,55 @@ div.tool > button.active {
 
 /* @group head */
 
-h1 {
+header {
 	position: absolute;
-	bottom: 3em;
-	left: 0em;
-	z-index: 1000;
-
-	padding: 0.25em 0.5em 0.25em 2em;
-
-	font-size: 4em;
-	font-weight: normal;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 	color: #fff;
-	background-color: #2d3841;
+	z-index: 10000;
 	
-		transition: left 2s;
-	-moz-transition: left 2s; /* Firefox 4 */
-	-webkit-transition: left 2s; /* Safari and Chrome */
-	-o-transition: left 2s; /* Opera */
+	background-color: #2d3841;
+	transition: right 0.5s;
+	-moz-transition: right 0.5s; /* Firefox 4 */
+	-webkit-transition: right 0.5s; /* Safari and Chrome */
+	-o-transition: right 0.5s; /* Opera */
 }
 
-h1.hide {
-	left: -99em;
+header.hide {
+	right: 100%;
+	overflow: hidden;
+}
+
+h1 {
+	position: absolute;
+	left: 3em;
+	bottom: 6em;
+	
+	z-index: 10000;
+	line-height: 1;
+
+	margin: 0;
+
+	font-size: 52px;
+	font-weight: normal;
+}
+
+header > h1 > span {
+	display: block;
+	font-size: 26px;
+}
+
+header > p {
+	display: block;
+	font-size: 26px;
+	
+	position: absolute;
+	left: 6em;
+	bottom: 8em;
+	padding-left: 60px;
+	background: url(img/ajax-loader_head.gif) no-repeat 0 50%;
 }
 
 h2 {
@@ -70,7 +98,7 @@ h2 {
 	font-weight: normal;
 	margin: 0 0 10px 0;
 	padding: 4px 0 7px 0;
-	border-bottom: 1px solid #96aeb0;
+	border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
 
@@ -134,8 +162,8 @@ div#toolbox {
 		div#toolbox div.tool > button {
 			float: left;
 			border-width: 0 1px 1px 1px;
-			-webkit-border-radius: 0 0 3px 3px;
-			border-radius: 0 0 3px 3px;
+			-webkit-border-radius: 0 0 5px 5px;
+			border-radius: 0 0 5px 5px;
 			position: relative;
 		}
 		
@@ -234,8 +262,8 @@ div#toolbox {
 				height: auto;
 				max-height: 700px;
 				padding: 10px 15px;
-				-webkit-border-radius: 0 0 3px 3px;
-				border-radius: 0 0 3px 3px;
+				-webkit-border-radius: 0 0 5px 5px;
+				border-radius: 0 0 5px 5px;
 				border-width: 0 1px 1px 1px;
 			}
 
@@ -279,6 +307,8 @@ div#searchPlace > div.content > ul.resultList {
 	div#searchPlace > div.content > ul.resultList li a:hover {
 		background-color: #2d3841;
 		color: #fff;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
 	}
 
 /* @end */
@@ -365,18 +395,18 @@ div#searchPlace > div.content > ul.resultList {
 
 div#sidebar div.tool > button {
 	float: left;
-	-webkit-border-radius: 0 0 3px 3px;
-	border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 5px 5px 0;
 	position: absolute;
 	left: 0px;
 	margin-left: -1px;
 	
 	border-width: 1px 1px 1px 0;
 	
-	transition: left 0.5s ease;
-	-moz-transition: left 0.5s ease; /* Firefox 4 */
-	-webkit-transition: left 0.5s ease; /* Safari and Chrome */
-	-o-transition: left 0.5s ease; /* Opera */
+	transition: left 0.5s ease, background-color 0.05s ease;
+	-moz-transition: left 0.5s ease, background-color 0.05s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease, background-color 0.05s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease, background-color 0.05s ease; /* Opera */
 }
 
 div#sidebar div#legend > button {
