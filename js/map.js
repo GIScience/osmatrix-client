@@ -47,7 +47,7 @@ var Map = (function () {
 
 		this.theMap = L.map(container, {
             center: [51.505, -0.09],
-            zoom: 13,
+            zoom: 9,
             minZoom: 3,
             maxZoom: 12,
             maxBounds: new L.LatLngBounds(new L.LatLng(34.66682, -10.53538), new L.LatLng(61.07390, 38.00957)),

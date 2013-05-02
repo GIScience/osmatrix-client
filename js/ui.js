@@ -62,6 +62,23 @@ var Ui = (function (w) {
 	}
     
     
+    /* *********************************************************************
+	 * MESSAGE
+	 * *********************************************************************/
+    
+    function hideMessage() {
+        $('#' + TOOLS.message).hide();
+    }
+    
+    function displayMessage(type, text) {
+        $('#' + TOOLS.message).removeClass().addClass(type);
+        $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
+        $('#' + TOOLS.message + ' p').text(text);
+        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
+        $('#' + TOOLS.message).show();
+    }
+    
+    
     
     
     /* *********************************************************************
@@ -100,6 +117,7 @@ var Ui = (function (w) {
 	 */
 	function handleGeocodeLinkClick(e) {
         theInterface.emit('ui:geocodeLinkClick', $(e.currentTarget).attr('href'));
+        if ($('#' + TOOLS.geocode + ' > button').hasClass('active')) {$('#' + TOOLS.geocode + ' > button').click(); }
 		return false;
 	}
     
@@ -227,6 +245,8 @@ var Ui = (function (w) {
     	} else {
     		displayMessage("warning", "Please select two timestamps for comparison.")
     	}
+        
+        if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
         
     	return false;
     }
@@ -417,24 +437,6 @@ var Ui = (function (w) {
         } else {
             $('#' + TOOLS.featureInfo + ' #chart').append('<p>Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.</p>');
         }
-    }
-    
-    
-    
-    /* *********************************************************************
-	 * MESSAGE
-	 * *********************************************************************/
-    
-    function displayMessage(type, text) {
-        $('#' + TOOLS.message).removeClass().addClass(type);
-        $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
-        $('#' + TOOLS.message + ' p').text(text);
-        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
-        $('#' + TOOLS.message).show();
-    }
-    
-    function hideMessage() {
-        $('#' + TOOLS.message).hide();
     }
     
     /* *********************************************************************

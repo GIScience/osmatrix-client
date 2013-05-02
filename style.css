@@ -9,8 +9,10 @@ div.tool > button {
 	color: #fff;
 	border: 0;
 	margin: 0;
-	padding: 10px;
-	line-height: 15px;
+	width: 36px;
+	height: 36px;
+	/*padding: 10px;
+	line-height: 15px;*/
 	border: 0 solid rgba(0,0,0,0.4);
 	font-size: 1em;
 	z-index: 5000;
@@ -28,10 +30,10 @@ div.tool > button:hover {
 	background-color: #3f4f5a;
 }
 
-div.tool > button span {
+/*div.tool > button span {
 	display: inline-block;
 	width: 15px;
-}
+}*/
 
 div.tool > button.loading,
 div.tool > button.active {
@@ -144,6 +146,8 @@ div#toolbox {
 	top: 0;
 	right: 1em;
 	z-index: 1000;
+	height: 0;
+	overflow: visible;
 }
 
 	div#toolbox div.tool {
@@ -152,6 +156,9 @@ div#toolbox {
 		margin-left: 10px;
 		overflow: hidden;
         padding: 0 3px 3px 3px;
+        
+        height: 0;
+		overflow: visible;
 
 		transition: width 0.5s;
 		-moz-transition: width 0.5s; /* Firefox 4 */
@@ -200,8 +207,8 @@ div#toolbox {
 		div#toolbox div.tool > button.loading,
 		div#toolbox div.tool > button.active {
 			border-width: 0 1px 1px 0;
-			-webkit-border-radius: 0 0 3px 0;
-			border-radius: 0 0 3px 0;
+			-webkit-border-radius: 0 0 5px 0;
+			border-radius: 0 0 5px 0;
 		}
 		
 		
@@ -215,10 +222,10 @@ div#toolbox {
 			border: 0 solid rgba(0,0,0,0.4);
 			margin-right: 0px;
 
-			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease;
-			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease; /* Firefox 4 */
-			-webkit-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
-			-o-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, padding 0.5s ease; /* Opera */
+			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease;
+			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Firefox 4 */
+			-webkit-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Safari and Chrome */
+			-o-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Opera */
 		}
 			
 		/**
@@ -243,11 +250,10 @@ div#toolbox {
 				border-width: 0 0 1px 1px;
 			}
 		
+		
 		/**
 		 * ACTIVE
 		 */
-		
-		
 		div#toolbox div.tool div.content {	
 			width: 0;
 			height: 0;
