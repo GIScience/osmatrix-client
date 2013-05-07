@@ -97,6 +97,7 @@ var Controller = (function (w) {
 	}
     
     function handleUserMapClick(latlng) {
+        ui.setFeatureInfoLoadingState(true);
         var layer = perma.parse(w.document.URL).layer;
         osmatrix.getFeatureInfoFromPoint(layer, latlng, handleFeatureInfoResult);
     }

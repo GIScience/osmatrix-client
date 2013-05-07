@@ -266,8 +266,8 @@ var Ui = (function (w) {
     
     function updateLegend(l) {
         $('#' + TOOLS.legend + ' .content #labels').children().remove();
-        $('#' + TOOLS.legend + ' .content h3').text(l.title);
-        $('#' + TOOLS.legend + ' .content p.desc').text(l.description);
+        $('#' + TOOLS.legend + ' .content h3').text(l.attribute.title);
+        $('#' + TOOLS.legend + ' .content p.desc').text(l.attribute.description);
         
         for (var i = 0, len = l.labels.length; i < len; i++) {
             $('#' + TOOLS.legend + ' .content #labels').append('<div class="legendItem"><span class="graphic" style="background-color: ' + l.labels[i].color + ';"></span>' + l.labels[i].label + '</div>');
@@ -284,6 +284,9 @@ var Ui = (function (w) {
         $('#' + TOOLS.featureInfo + ' #chart').empty();
         
         if (info && colors) {
+            $('#' + TOOLS.featureInfo + ' h3').text(info.attribute.title);
+            $('#' + TOOLS.featureInfo + ' p').text(info.attribute.description);
+            
             var chartArea,
                 WIDTH = $('#' + TOOLS.featureInfo + ' #chart').width(),
                 HEIGHT = $('#' + TOOLS.featureInfo + ' #chart').height(),
@@ -296,7 +299,7 @@ var Ui = (function (w) {
                         .y(function(d) {return yScale(d.value); })
                         .interpolate("linear"),
                 stddevArea = d3.svg.area()
-                        .x(function(d) { return xScale(d.timestamp); })
+                        .x(function(d) {return xScale(d.timestamp); })
                         .y0(function(d) {return yScale(d.lower); })
                         .y1(function(d) {return yScale(d.upper); }),
                 averages = [],
@@ -435,8 +438,13 @@ var Ui = (function (w) {
             
             if (!$('#' + TOOLS.featureInfo + '> .content').hasClass('active')) {$('#' + TOOLS.featureInfo + ' button').click(); }
         } else {
-            $('#' + TOOLS.featureInfo + ' #chart').append('<p>Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.</p>');
+            $('#' + TOOLS.featureInfo + ' > p').text('Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.');
         }
+        setLoadingState(false, TOOLS.featureInfo);
+    }
+    
+    function setFeatureInfoLoadingState(state) {
+        setLoadingState(state, TOOLS.featureInfo);
     }
     
     /* *********************************************************************
@@ -464,6 +472,7 @@ var Ui = (function (w) {
     Ui.prototype.updateLegend = updateLegend;
     Ui.prototype.updateFeatureInfo = updateFeatureInfo;
     Ui.prototype.setLayerLoadingState = setLayerLoadingState;
+    Ui.prototype.setFeatureInfoLoadingState = setFeatureInfoLoadingState;
     
     
     theInterface = new Ui();

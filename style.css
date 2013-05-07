@@ -30,16 +30,17 @@ div.tool > button:hover {
 	background-color: #3f4f5a;
 }
 
-/*div.tool > button span {
-	display: inline-block;
-	width: 15px;
-}*/
-
 div.tool > button.loading,
 div.tool > button.active {
 	background-color: #fff;
 	color: #2d3841;
 	margin-left: -1px;
+}
+
+div.tool > div.spinner {
+	background: #fff url(img/ajax-loader.gif) no-repeat 50% 50%;
+	z-index: 5000;
+	border: 0 solid rgba(0,0,0,0.4);
 }
 
 /* @group head */
@@ -112,6 +113,10 @@ h3 {
 	font-weight: normal;
 }
 
+p {
+	margin: 0 0 15px 0;
+}
+
 /* @end */
 
 /* @group map */
@@ -123,7 +128,6 @@ section#map {
 	bottom: 0;
 	left: 0;
 	z-index: 500;
-	border-left: 1px solid rgba(0,0,0,0.4);
 	
 	transition: left 0.5s ease;
 	-moz-transition: left 0.5s ease; /* Firefox 4 */
@@ -132,9 +136,9 @@ section#map {
 
 }
 
-section#map.showSidebar {
+/*section#map.showSidebar {
     left: 380px;
-}
+}*/
 
 /* @end */
 
@@ -176,12 +180,12 @@ div#toolbox {
 		
 		div#toolbox div#geolocate > button,
 		div#toolbox div#geolocate > button:hover {
-			background-position: -105px -35px;
+			background-position: -106px -35px;
 		}
 		
 		div#toolbox div#geolocate > button.active,
 		div#toolbox div#geolocate > button.loading {
-			background-position: -105px 0;
+			background-position: -106px 0;
 		}
 		
 		div#toolbox div#searchPlace > button,
@@ -210,8 +214,6 @@ div#toolbox {
 			-webkit-border-radius: 0 0 5px 0;
 			border-radius: 0 0 5px 0;
 		}
-		
-		
 
 		div#toolbox div.tool div.spinner,
 		div#toolbox div.tool div.content {
@@ -219,7 +221,6 @@ div#toolbox {
 			width: 0;
 			float: left;
 			overflow: hidden;
-			border: 0 solid rgba(0,0,0,0.4);
 			margin-right: 0px;
 
 			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease;
@@ -238,11 +239,9 @@ div#toolbox {
 			div#toolbox div.tool div.spinner {
 				width: 0;
 				height: 35px;
-				background: #fff url(img/ajax-loader.gif) no-repeat 50% 50%;
-				-webkit-border-radius: 0 0 0 3px;
-				border-radius: 0 0 0 3px;
+				-webkit-border-radius: 0 0 0 5px;
+				border-radius: 0 0 0 5px;
 				margin-right: -1px;
-				z-index: 5000;
 			}
 
 			div#toolbox div.tool div.spinner.loading {
@@ -261,6 +260,7 @@ div#toolbox {
 			background-color: #fff;
 			color: #2d3841;
 			z-index: 4000;
+			border: 0 solid rgba(0,0,0,0.4);
 		}
 
 			div#toolbox div.tool div.content.active {	
@@ -304,6 +304,9 @@ div#searchPlace > div.content > ul.resultList {
         line-height: 1.2;
         background-color: #fff;
         
+        -webkit-border-radius: 3px;
+		border-radius: 3px;
+        
         transition: background-color 0.1s ease;
 		-moz-transition: background-color 0.1s ease; /* Firefox 4 */
 		-webkit-transition: background-color 0.1s ease; /* Safari and Chrome */
@@ -313,8 +316,6 @@ div#searchPlace > div.content > ul.resultList {
 	div#searchPlace > div.content > ul.resultList li a:hover {
 		background-color: #2d3841;
 		color: #fff;
-		-webkit-border-radius: 3px;
-		border-radius: 3px;
 	}
 
 /* @end */
@@ -366,7 +367,11 @@ div#searchPlace > div.content > ul.resultList {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 35px;
+	width: 0;
+	
+	
+	border-right: 1px solid rgba(0,0,0,0.4);
+	background-color: #fff;
 	
 	transition: width 0.5s ease, padding 0.5s ease;
 	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
@@ -375,36 +380,37 @@ div#searchPlace > div.content > ul.resultList {
 }
 
 #sidebar.active {
-	width: 415px;
+	width: 380px;
 }
 
-#sidebar .content {
-	width: 0;
-	padding: 0;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	overflow: hidden;
+	#sidebar .content {
+		width: 0;
+		padding: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		overflow: hidden;
+		
+		transition: width 0.5s ease, padding 0.5s ease;
+		-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+		-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+		-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+	}
 	
-	transition: width 0.5s ease, padding 0.5s ease;
-	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
-	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
-	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
-}
+	#sidebar .content.active {
+		width: 350px;
+		padding: 10px 15px;
+		/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
+	}
 
-#sidebar .content.active {
-	width: 350px;
-	padding: 10px 15px;
-	/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
-}
-
-div#sidebar div.tool > button {
+div#sidebar div.tool > button,
+div#sidebar div.tool > div.spinner {
 	float: left;
 	-webkit-border-radius: 0 0 5px 5px;
 	border-radius: 0 5px 5px 0;
 	position: absolute;
-	left: 0px;
+	left: 0;
 	margin-left: -1px;
 	
 	border-width: 1px 1px 1px 0;
@@ -415,12 +421,9 @@ div#sidebar div.tool > button {
 	-o-transition: left 0.5s ease, background-color 0.05s ease; /* Opera */
 }
 
-div#sidebar div#legend > button {
-	bottom: 50px;
-}
-
 div#sidebar div#legend > button,
 div#sidebar div#legend > button:hover {
+	bottom: 50px;
 	background-position: -70px -35px;
 }
 
@@ -429,12 +432,9 @@ div#sidebar div#legend > button.loading {
 	background-position: -70px 0;
 }
 
-div#sidebar div#featureInfo > button {
-	bottom: 100px;
-}
-
 div#sidebar div#featureInfo > button,
 div#sidebar div#featureInfo > button:hover {
+	bottom: 100px;
 	background-position: -140px -35px;
 }
 
@@ -443,8 +443,38 @@ div#sidebar div#featureInfo > button.loading {
 	background-position: -140px 0;
 }
 
+div#sidebar div#featureInfo > button.loading {
+	-webkit-border-radius: 0 0 5px 0;
+	border-radius: 0 0 5px 0;
+	border-top-width: 0;
+}
+
 div#sidebar.active div.tool > button {
 	left: 381px;
+}
+
+div#sidebar div.tool > div.spinner {
+	bottom: 135px;
+	height: 0;
+	width: 35px;
+	border-width: 0;
+	z-index: 5001;
+	
+	transition: height 0.5s ease;
+	-moz-transition: height 0.5s ease; /* Firefox 4 */
+	-webkit-transition: height 0.5s ease; /* Safari and Chrome */
+	-o-transition: height 0.5s ease; /* Opera */
+}
+
+div#sidebar.active div.tool > div.spinner {
+	left: 381px;
+}
+
+div#sidebar div.tool > div.spinner.loading {
+	height: 35px;
+	-webkit-border-radius: 0 5px 0 0;
+	border-radius: 0 5px 0 0;
+	border-width: 1px 1px 0 0;
 }
 
 /* @group Legend */
