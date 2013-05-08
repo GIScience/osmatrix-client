@@ -438,7 +438,8 @@ var Ui = (function (w) {
             
             if (!$('#' + TOOLS.featureInfo + '> .content').hasClass('active')) {$('#' + TOOLS.featureInfo + ' button').click(); }
         } else {
-            $('#' + TOOLS.featureInfo + ' > p').text('Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.');
+            $('#' + TOOLS.featureInfo + ' h3').text('');
+            $('#' + TOOLS.featureInfo + ' p').text('Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.');
         }
         setLoadingState(false, TOOLS.featureInfo);
     }
