@@ -268,6 +268,7 @@ var Ui = (function (w) {
 	 * *********************************************************************/
     
     function updateLegend(l) {
+        $('#toolbox > h2').text(l.attribute.title);
         $('#' + TOOLS.legend + ' .content #labels').children().remove();
         $('#' + TOOLS.legend + ' .content h3').text(l.attribute.title);
         $('#' + TOOLS.legend + ' .content p.desc').text(l.attribute.description);

@@ -153,6 +153,19 @@ div#toolbox {
 	height: 0;
 	overflow: visible;
 }
+	
+	div#toolbox > h2 {
+		position: relative;
+		float: left;
+		margin-left: 10px;
+		border-radius: 0 0 5px 5px;
+		border: 0;
+		background-color: rgba(45,56,65,0.75);
+		color: #fff;
+		font-weight: normal;
+		padding: 10px 10px 11px 10px;
+	}
+
 
 	div#toolbox div.tool {
 		position: relative;
