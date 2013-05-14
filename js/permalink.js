@@ -38,8 +38,7 @@ var Permalink = (function (w) {
 	 */
 	function parse(url) {
 		if (url.indexOf('#') !== -1) {
-			var urlState = url.split('#')[1].split('/'),
-                times = urlState[4].split('?')[1].split('&');
+			var urlState = url.split('#')[1].split('/');
             
             state = {};
             
@@ -52,6 +51,8 @@ var Permalink = (function (w) {
 				state.lng = urlState[4];
 				state.lat = urlState[5];
 			} else {
+                var times = urlState[4].split('?')[1].split('&');
+                
 				state.zoom = urlState[2];
 				state.lng = urlState[3];
 				state.lat = urlState[4].split('?')[0];
