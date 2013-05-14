@@ -296,7 +296,7 @@ var Ui = (function (w) {
                 HEIGHT = $('#' + TOOLS.featureInfo + ' #chart').height(),
                 MARGIN_TOP = 10,
                 MARGIN_LEFT = 60,
-                MARGIN_BOTTOM = 20,
+                MARGIN_BOTTOM = 60,
                 min, max, xScale, yScale, xDomain = [],
                 line = d3.svg.line()
                         .x(function(d) {return xScale(d.timestamp); })
@@ -405,8 +405,9 @@ var Ui = (function (w) {
                     .attr("class", "xLabel")
                     .text(function(d) {return d;})
                     .attr("x", function(d) {return xScale(d);})
-                    .attr("y", HEIGHT)
-                    .attr("text-anchor", "middle");
+                    .attr("y", HEIGHT - MARGIN_BOTTOM + 10)
+                    .attr("text-anchor", "top")
+                    .attr("style", "writing-mode: tb;");
             
             
             
