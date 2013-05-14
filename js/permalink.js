@@ -1,7 +1,8 @@
-var Permalink = (function () {
+var Permalink = (function (w) {
     'use strict';
 
-	var state;
+	var state,
+        history = w.history;
 
 	/**
 	 * Constructor
@@ -26,7 +27,8 @@ var Permalink = (function () {
 		if (lat) {state.lat = lat; }
         
 		var url = "#" + state.mode + "/" + state.layer + "/" + ((state.times.length === 1) ? state.times[0] + "/" : "") + state.zoom + "/" + state.lon + "/" + state.lat + ((state.times.length === 2) ? "?start=" + state.times[0] + "&end=" + state.times[1] : "");
-		history.pushState(null, null, url);
+        
+        if (history.pushState) {history.pushState(state, null, url); } else {w.location = url; return false; }
 	}
 
 	/**
@@ -36,9 +38,11 @@ var Permalink = (function () {
 	 */
 	function parse(url) {
 		if (url.indexOf('#') !== -1) {
-			state = {};
+			var urlState = url.split('#')[1].split('/'),
+                times = urlState[4].split('?')[1].split('&');
             
-			var urlState = url.split('#')[1].split('/');
+            state = {};
+            
 			state.mode = urlState[0];
 			state.layer = urlState[1];
 			state.times = [];
@@ -52,7 +56,6 @@ var Permalink = (function () {
 				state.lng = urlState[3];
 				state.lat = urlState[4].split('?')[0];
 
-				var times = urlState[4].split('?')[1].split('&');
 				for (var i = 0, len = times.length; i < len; i++) {
 					state.times.push(times[i].split('=')[1]);
 				}
@@ -65,4 +68,4 @@ var Permalink = (function () {
 	Permalink.prototype.parse = parse;
 
 	return new Permalink();
-})();
+})(window);

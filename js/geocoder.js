@@ -1,29 +1,29 @@
-var Geocoder = (function() {
-	var INSTANCE;
-
-	var NOMINATIM_URL = 'http://nominatim.openstreetmap.org/search?format=json&polygon=0&addressdetails=1&viewbox=5.52,55.26,15.18,47.27&bounded=1';
+var Geocoder = (function (window) {
+    "use strict";
+    
+	var $ = window.jQuery,
+        NOMINATIM_URL = 'http://nominatim.openstreetmap.org/search?format=json&polygon=0&addressdetails=1&viewbox=5.52,55.26,15.18,47.27&bounded=1';
 
 	/**
 	 * Constructor
 	 */
-	function geocoder() {
-		if (!INSTANCE) INSTANCE = this;
+	function Geocoder() {
 	}
 
 	/**
-	 * [find description]
-	 * @param  {[type]}   address  [description]
-	 * @param  {Function} callback [description]
+	 * Sends the request to Nominatim and calls the callback function.
+	 * @param  {String}   address  Address to be geocoded
+	 * @param  {Function} callback Callback which is called after the results are returned from Nominatim
 	 */
 	function find(address, callback) {
-		jQuery.getJSON(
-			'/cgi-bin/proxy.cgi?url=' + encodeURIComponent(NOMINATIM_URL + '&q=' + address.replace(/\s+/g,'+')),
+		$.getJSON(
+			'/cgi-bin/proxy.cgi?url=' + encodeURIComponent(NOMINATIM_URL + '&q=' + address.replace(/\s+/g, '+')),
 			null,
 			callback
 		);
 	}
 
-	geocoder.prototype.find = find;
+	Geocoder.prototype.find = find;
 
-	return new geocoder();
-})();
+	return new Geocoder();
+}(window));

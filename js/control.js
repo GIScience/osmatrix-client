@@ -7,6 +7,7 @@ var Controller = (function (w) {
         geolocator = w.Geolocator,
         geocoder = w.Geocoder,
         osmatrix = w.OSMatrix,
+        Map = w.Map,
         HIGHLIGHT_COLORS = ['#E41A1C', '#377EB8', '#4DAF4A', '#984EA3', '#FF7F00', '#FFFF33', '#A65628'],
         map;
     
@@ -124,8 +125,7 @@ var Controller = (function (w) {
 	 */
 	function initializeTheMap() {
 		var permaLink = perma.parse(w.document.URL);
-		if (permaLink) {map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom); }
-            else {handleGeolocationRequest(); }
+		if (permaLink) {map.moveTo([permaLink.lat, permaLink.lng], permaLink.zoom); } else {handleGeolocationRequest(); }
         
         ui.setLayerSwitcherToMode(permaLink);
     }

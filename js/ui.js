@@ -106,9 +106,12 @@ var Ui = (function (w) {
 	 * [handleFormType description]
 	 */
 	function handleFormType(e) {
-		if (e.keyCode === 13) {
+        var key = e.which || e.keyCode;
+        
+		if (key === 13) {
 			setLoadingState(true, TOOLS.geocode);
             theInterface.emit('ui:geocodeRequest', $(e.currentTarget).val());
+            return false;
 		}
 	}
     
@@ -243,7 +246,7 @@ var Ui = (function (w) {
                 times: times
             });
     	} else {
-    		displayMessage("warning", "Please select two timestamps for comparison.")
+    		displayMessage("warning", "Please select two timestamps for comparison.");
     	}
         
         if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
@@ -455,7 +458,7 @@ var Ui = (function (w) {
     function Ui() {
         $('.tool > button').click(handleButtonClick);
         $('#' + TOOLS.layer + ' .btn-group button').click(handleLayerModeToogle);
-        $('#' + TOOLS.geocode + ' input[type="text"]').keyup(handleFormType);
+        $('#' + TOOLS.geocode + ' input[type="text"]').keypress(handleFormType);
         $('#' + TOOLS.layer + ' form').submit(handleLayerSubmit);
         hideMessage();
     }

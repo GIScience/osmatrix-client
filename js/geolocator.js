@@ -1,19 +1,18 @@
-var Geolocator = (function() {
-	var INSTANCE;
-
+var Geolocator = (function (w) {
+    "use strict";
+    
 	/**
 	 * Constructor
 	 */
-	function geolocator() {
-		if (!INSTANCE) INSTANCE = this;
+	function Geolocator() {
+		
 	}
 
 	function locate(locationSuccess, locationError, locationNotSupported) {
-		if (navigator.geolocation) navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
-		else locationNotSupported();
+		if (w.navigator.geolocation) {w.navigator.geolocation.getCurrentPosition(locationSuccess, locationError); } else {locationNotSupported(); }
 	}
 
-	geolocator.prototype.locate = locate;
+	Geolocator.prototype.locate = locate;
 
-	return new geolocator();
-})();
+	return new Geolocator();
+}(window));
