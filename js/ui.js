@@ -40,8 +40,6 @@ var Ui = (function (w) {
 		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
         $('#sidebar').removeClass('active');
         
-        
-        console.log($('#' + tool));
         $('#' + tool).toggleClass('active');
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
@@ -133,7 +131,8 @@ var Ui = (function (w) {
 	 * @param  {[type]} results [description]
 	 */
 	function updateGeocodeResultList(permaLink, results) {
-        var queryParams = '?' + permaLink.split('?')[1] || '',
+//        var queryParams = '?' + permaLink.split('?')[1] || '',
+        var queryParams = permaLink.split('?')[1],
             linkBase = ((permaLink.indexOf('?') !== -1) ? permaLink.substring(0, permaLink.indexOf('?')) : permaLink.substring(0)).split('#')[0],
             mapState = ((permaLink.indexOf('?') !== -1) ? permaLink.substring(0, permaLink.indexOf('?')) : permaLink.substring(0)).split('#')[1].split('/');
         
@@ -147,7 +146,7 @@ var Ui = (function (w) {
                     mapState[mapState.length - 2] = parseFloat(address.lon);
                     
                     var address = results[i];
-                    var link = linkBase + "#" + mapState.join("/") + queryParams;
+                    var link = linkBase + "#" + mapState.join("/") + (queryParams ? '?' + queryParams : '');
                     
                     $('#' + TOOLS.geocode + ' ul.resultList').append('<li><a href="' + link + '">' + address.display_name + '</a></li>');
                 }
