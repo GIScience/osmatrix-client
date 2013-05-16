@@ -21,7 +21,7 @@ var Controller = (function (w) {
 	 * @return {[type]}          [description]
 	 */
 	function handleGeolocateSuccess(position) {
-		map.moveTo([position.coords.latitude, position.coords.longitude]);
+        map.moveTo([position.coords.latitude, position.coords.longitude]);
 		ui.stopGeolocation();
 	}
 

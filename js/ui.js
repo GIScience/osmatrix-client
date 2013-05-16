@@ -20,9 +20,11 @@ var Ui = (function (w) {
 	 */
 	function setLoadingState(state, tool) {
 		if (state) {
+            $('#' + tool).addClass('loading');
 			$('#' + tool + ' button').addClass('loading');
 			$('#' + tool + ' .spinner').addClass('loading');
 		} else {
+            $('#' + tool).removeClass('loading');
 			$('#' + tool + ' button').removeClass('loading');
 			$('#' + tool + ' .spinner').removeClass('loading');
 		}
@@ -33,16 +35,18 @@ var Ui = (function (w) {
 	 * @param  {[type]} tool [description]
 	 */
 	function toggleActiveState(tool) {
+        $('.tool').not('#' + tool).removeClass('active');
         $('.tool > button').not('#' + tool + ' > button').removeClass('active');
 		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
-        $('#map').removeClass('showSidebar');
         $('#sidebar').removeClass('active');
         
+        
+        console.log($('#' + tool));
+        $('#' + tool).toggleClass('active');
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
         
         if ($('#' + tool).parent().attr('id') === 'sidebar' && $('#' + tool + ' > button').hasClass('active')) {
-            $('#map').addClass('showSidebar');
             $('#sidebar').addClass('active');
         }
 	}
@@ -92,7 +96,7 @@ var Ui = (function (w) {
     
     function deactivateGeolocation(text) {
         stopGeolocation();
-        $(TOOLS.geolocate).hide();
+        $('#' + TOOLS.geolocate).hide();
         if (text) {displayMessage('error', text); }
     }
     

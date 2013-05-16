@@ -173,14 +173,26 @@ div#toolbox {
 		margin-left: 10px;
 		overflow: hidden;
         padding: 0 3px 3px 3px;
-        
         height: 0;
 		overflow: visible;
-
-		transition: width 0.5s;
-		-moz-transition: width 0.5s; /* Firefox 4 */
-		-webkit-transition: width 0.5s; /* Safari and Chrome */
-		-o-transition: width 0.5s; /* Opera */
+		width: 35px;
+		
+		transition: width 0.5s ease;
+		-moz-transition: width 0.5s ease; /* Firefox 4 */
+		-webkit-transition: width 0.5s ease; /* Safari and Chrome */
+		-o-transition: left 0.5s ease; /* Opera */
+	}
+	
+	div#toolbox div.tool.loading {
+		width: 74px;
+	}
+	
+	div#toolbox div.tool.active {
+		width: 368px;
+	}
+	
+	div#toolbox div.tool.active.loading {
+		width: 404px;
 	}
 	
 		div#toolbox div.tool > button {
@@ -240,13 +252,6 @@ div#toolbox {
 			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Firefox 4 */
 			-webkit-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Safari and Chrome */
 			-o-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Opera */
-		}
-			
-		/**
-		 * LOADING STATE
-		 */
-		div#toolbox div.tool.loading {
-			
 		}
 		
 			div#toolbox div.tool div.spinner {
