@@ -185,14 +185,29 @@ div#toolbox {
 	
 	div#toolbox div.tool.loading {
 		width: 74px;
+		
+		transition: width 0.4s ease;
+		-moz-transition: width 0.4s ease; /* Firefox 4 */
+		-webkit-transition: width 0.4s ease; /* Safari and Chrome */
+		-o-transition: left 0.4s ease; /* Opera */
 	}
 	
 	div#toolbox div.tool.active {
-		width: 368px;
+		width: 369px;
+		
+		transition: width 0.4s ease;
+		-moz-transition: width 0.4s ease; /* Firefox 4 */
+		-webkit-transition: width 0.4s ease; /* Safari and Chrome */
+		-o-transition: left 0.4s ease; /* Opera */
 	}
 	
 	div#toolbox div.tool.active.loading {
-		width: 404px;
+		width: 406px;
+		
+		transition: width 0.4s ease;
+		-moz-transition: width 0.4s ease; /* Firefox 4 */
+		-webkit-transition: width 0.4s ease; /* Safari and Chrome */
+		-o-transition: left 0.4s ease; /* Opera */
 	}
 	
 		div#toolbox div.tool > button {
@@ -248,10 +263,10 @@ div#toolbox {
 			overflow: hidden;
 			margin-right: 0px;
 
-			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease;
-			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Firefox 4 */
-			-webkit-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Safari and Chrome */
-			-o-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease; /* Opera */
+			transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, border 0.5s ease;
+			-moz-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, border 0.5s ease; /* Firefox 4 */
+			-webkit-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, border 0.5s ease; /* Safari and Chrome */
+			-o-transition: width 0.5s ease, padding 0.5s ease, height 0.5s ease, border 0.5s ease; /* Opera */
 		}
 		
 			div#toolbox div.tool div.spinner {
@@ -397,6 +412,20 @@ div#searchPlace > div.content > ul.resultList {
 	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
 }
 
+div#sidebar p,
+div#sidebar ul > li {
+	line-height: 1.5;
+}
+
+div#sidebar > div#about h3 {
+	margin-top: 36px;
+	margin-bottom: 9px;
+}
+
+div#sidebar ul {
+	padding: 0 0 0 15px;
+}
+
 #sidebar.active {
 	width: 380px;
 }
@@ -437,6 +466,17 @@ div#sidebar div.tool > div.spinner {
 	-moz-transition: left 0.5s ease, background-color 0.05s ease; /* Firefox 4 */
 	-webkit-transition: left 0.5s ease, background-color 0.05s ease; /* Safari and Chrome */
 	-o-transition: left 0.5s ease, background-color 0.05s ease; /* Opera */
+}
+
+div#sidebar div#about > button,
+div#sidebar div#about > button:hover {
+	bottom: 150px;
+	background-position: -175px -35px;
+}
+
+div#sidebar div#about > button.active,
+div#sidebar div#about > button.loading {
+	background-position: -175px 0;
 }
 
 div#sidebar div#legend > button,
@@ -493,6 +533,16 @@ div#sidebar div.tool > div.spinner.loading {
 	-webkit-border-radius: 0 5px 0 0;
 	border-radius: 0 5px 0 0;
 	border-width: 1px 1px 0 0;
+}
+
+div#sidebar > div#about ul.publications {
+	padding: 0;
+}
+
+div#sidebar > div#about ul.publications li {
+	text-indent: -30px;
+	margin-left: 30px;
+	list-style: none;
 }
 
 /* @group Legend */
