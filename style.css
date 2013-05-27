@@ -417,6 +417,16 @@ div#sidebar ul > li {
 	line-height: 1.5;
 }
 
+div#sidebar a:link,
+div#sidebar a:visited {
+	color: #ed2d1c;
+}
+
+div#sidebar a:hover,
+div#sidebar a:active {
+	text-decoration: none;
+}
+
 div#sidebar > div#about h3 {
 	margin-top: 36px;
 	margin-bottom: 9px;
@@ -470,7 +480,7 @@ div#sidebar div.tool > div.spinner {
 
 div#sidebar div#about > button,
 div#sidebar div#about > button:hover {
-	bottom: 150px;
+	bottom: 100px;
 	background-position: -175px -35px;
 }
 
@@ -492,7 +502,7 @@ div#sidebar div#legend > button.loading {
 
 div#sidebar div#featureInfo > button,
 div#sidebar div#featureInfo > button:hover {
-	bottom: 100px;
+	bottom: 150px;
 	background-position: -140px -35px;
 }
 
@@ -512,7 +522,7 @@ div#sidebar.active div.tool > button {
 }
 
 div#sidebar div.tool > div.spinner {
-	bottom: 135px;
+	bottom: 185px;
 	height: 0;
 	width: 35px;
 	border-width: 0;
