@@ -177,10 +177,10 @@ div#toolbox {
 		overflow: visible;
 		width: 35px;
 		
-		transition: width 0.5s ease;
-		-moz-transition: width 0.5s ease; /* Firefox 4 */
-		-webkit-transition: width 0.5s ease; /* Safari and Chrome */
-		-o-transition: left 0.5s ease; /* Opera */
+		transition: width 0.6s ease;
+		-moz-transition: width 0.6s ease; /* Firefox 4 */
+		-webkit-transition: width 0.6s ease; /* Safari and Chrome */
+		-o-transition: left 0.6s ease; /* Opera */
 	}
 	
 	div#toolbox div.tool.loading {
