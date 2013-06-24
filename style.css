@@ -400,16 +400,20 @@ div#searchPlace > div.content > ul.resultList {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 0;
-	
+	width: 380px;
+	left: -380px;
 	
 	border-right: 1px solid rgba(0,0,0,0.4);
 	background-color: #fff;
 	
-	transition: width 0.5s ease, padding 0.5s ease;
-	-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
-	-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
-	-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+	transition: left 0.5s ease, padding 0.5s ease;
+	-moz-transition: left 0.5s ease, padding 0.5s ease; /* Firefox 4 */
+	-webkit-transition: left 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
+	-o-transition: left 0.5s ease, padding 0.5s ease; /* Opera */
+}
+
+#sidebar.active {
+	left: 0;
 }
 
 div#sidebar p,
@@ -436,29 +440,27 @@ div#sidebar ul {
 	padding: 0 0 0 15px;
 }
 
-#sidebar.active {
-	width: 380px;
-}
-
 	#sidebar .content {
-		width: 0;
-		padding: 0;
+		width: 350px;
+		padding: 10px 15px;
 		position: absolute;
 		top: 0;
-		left: 0;
+		left: -380px;
 		bottom: 0;
 		overflow: hidden;
 		
-		transition: width 0.5s ease, padding 0.5s ease;
-		-moz-transition: width 0.5s ease, padding 0.5s ease; /* Firefox 4 */
-		-webkit-transition: width 0.5s ease, padding 0.5s ease; /* Safari and Chrome */
-		-o-transition: width 0.5s ease, padding 0.5s ease; /* Opera */
+		transition: left 0.1s ease;
+		-moz-transition: left 0.1s ease; /* Firefox 4 */
+		-webkit-transition: left 0.1s ease; /* Safari and Chrome */
+		-o-transition: left 0.1s ease; /* Opera */
 	}
 	
 	#sidebar .content.active {
-		width: 350px;
-		padding: 10px 15px;
-		/*box-shadow: 0 0 4px rgba(0,0,0,0.4);*/
+		left: 0;
+		transition: left 0.5s ease;
+		-moz-transition: left 0.5s ease; /* Firefox 4 */
+		-webkit-transition: left 0.5s ease; /* Safari and Chrome */
+		-o-transition: left 0.5s ease; /* Opera */
 	}
 
 div#sidebar div.tool > button,
@@ -467,7 +469,7 @@ div#sidebar div.tool > div.spinner {
 	-webkit-border-radius: 0 0 5px 5px;
 	border-radius: 0 5px 5px 0;
 	position: absolute;
-	left: 0;
+	left: 381px;
 	margin-left: -1px;
 	
 	border-width: 1px 1px 1px 0;
@@ -515,10 +517,6 @@ div#sidebar div#featureInfo > button.loading {
 	-webkit-border-radius: 0 0 5px 0;
 	border-radius: 0 0 5px 0;
 	border-top-width: 0;
-}
-
-div#sidebar.active div.tool > button {
-	left: 381px;
 }
 
 div#sidebar div.tool > div.spinner {
