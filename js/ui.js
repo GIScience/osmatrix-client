@@ -4,7 +4,8 @@ var Ui = (function (w) {
     var $ = w.jQuery,
         d3 = w.d3,
         TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend', featureInfo: 'featureInfo', message: 'message' },
-        theInterface;
+        theInterface,
+		attributes;
     
     
     
@@ -201,11 +202,25 @@ var Ui = (function (w) {
 		   	}
 	    }
     }
+	
+	function handleAttributeChange(e) {
+		var attributeId;
+		for (var i = 0, len = attributes.length; i < len; i++) {
+			if (attribute[i].name === e.target.value) {attributeId = attribute[i].validfrom; break; }
+		}
+		
+		var checkboxes = $('#' + TOOLS.layer + ' fieldset#timestamps label input¢[type="checkbox"]');
+		for (var i = 0, len = checkboxes.length; i < len; i++) {
+			if (checkboxes[i].value < attributeId) {checkboxes[i].attr('disabled', 'disabled'); }
+		}
+	}
     
     function initializeLayerSwitcher(c) {
+		attributes = c.attributes;
         for (var i = 0, len = c.attributes.length; i < len; i++) {
             $('#' + TOOLS.layer + ' select#characteristics').append('<option value="' + c.attributes[i].name + '">' + c.attributes[i].title + '</option>');
         }
+		$('#' + TOOLS.layer + ' select#characteristics').change(handleAttributeChange);
 
         for (var i = 0, len = c.timestamps.length; i < len; i++) {
             $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + c.timestamps[i].id + '">' + c.timestamps[i].timestamp + '</label>');
@@ -213,6 +228,10 @@ var Ui = (function (w) {
 
         $('#' + TOOLS.layer + ' input[name="timestamp"]').change(handleTimeStampChange);
     }
+	
+	function updateTimeSwitcher() {
+		
+	}
     
     function setLayerSwitcherToMode(state) {
         if (state) {
