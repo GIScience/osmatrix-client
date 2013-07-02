@@ -77,7 +77,7 @@ var Ui = (function (w) {
         $('#' + TOOLS.message).removeClass().addClass(type);
         $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
         $('#' + TOOLS.message + ' p').text(text);
-        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
+        $('#' + TOOLS.message + ' #actions > button').click(hideMessage);
         $('#' + TOOLS.message).show();
     }
     
@@ -282,12 +282,11 @@ var Ui = (function (w) {
                 layer: layer,
                 times: times
             });
+			if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
     	} else {
     		displayMessage("warning", "Please select two timestamps for comparison.");
     	}
-        
-        if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
-        
+		
     	return false;
     }
     
