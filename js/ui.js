@@ -206,12 +206,27 @@ var Ui = (function (w) {
 	function handleAttributeChange(e) {
 		var attributeId;
 		for (var i = 0, len = attributes.length; i < len; i++) {
-			if (attribute[i].name === e.target.value) {attributeId = attribute[i].validfrom; break; }
+			if (attributes[i].name === e.target.value) {attributeId = attributes[i].validfrom; break; }
 		}
 		
-		var checkboxes = $('#' + TOOLS.layer + ' fieldset#timestamps label input¢[type="checkbox"]');
+		var checkboxes = $('#' + TOOLS.layer + ' input[name="timestamp"]');
+		var selectedTimes = [];
+		
 		for (var i = 0, len = checkboxes.length; i < len; i++) {
-			if (checkboxes[i].value < attributeId) {checkboxes[i].attr('disabled', 'disabled'); }
+			if (checkboxes[i].value < attributeId) {
+				if (checkboxes[i].checked) {selectedTimes.push(parseInt(checkboxes[i].value)); }
+				checkboxes[i].checked = false; 
+				$(checkboxes[i]).attr('disabled', 'disabled'); 
+			} else {
+				$(checkboxes[i]).removeAttr('disabled'); 
+				if (selectedTimes[0] && 
+					selectedTimes[0] < attributeId && 
+					parseInt(checkboxes[i].value) === attributeId) {$(checkboxes[i]).attr('checked', 'checked'); }
+				
+				if (selectedTimes[1] && 
+					selectedTimes[1] <= attributeId && 
+					i + 1 === len) {$(checkboxes[i]).attr('checked', 'checked'); }
+			}
 		}
 	}
     
