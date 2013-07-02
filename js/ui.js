@@ -238,24 +238,19 @@ var Ui = (function (w) {
 		$('#' + TOOLS.layer + ' select#characteristics').change(handleAttributeChange);
 
         for (var i = 0, len = c.timestamps.length; i < len; i++) {
-            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + c.timestamps[i].id + '">' + c.timestamps[i].timestamp + '</label>');
+            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i + 1 < attributes[i].validfrom) ? 'disabled="disabled"' : '') + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + c.timestamps[i].id + '">' + c.timestamps[i].timestamp + '</label>');
         }
-
         $('#' + TOOLS.layer + ' input[name="timestamp"]').change(handleTimeStampChange);
     }
-	
-	function updateTimeSwitcher() {
-		
-	}
     
     function setLayerSwitcherToMode(state) {
         if (state) {
             $('#' + TOOLS.layer + ' .btn-group button[value="' + state.mode + '"]').click();
-            $('#' + TOOLS.layer + ' #characteristics').val(state.layer);
+            $('#' + TOOLS.layer + ' select#characteristics').val(state.layer).change();
     
             var times = $('#' + TOOLS.layer + ' input[name="timestamp"]');
             for (var i = 0, len = times.length; i < len; i++) {
-              times[i].checked = (state.times.indexOf(times[i].value) != -1);
+				times[i].checked = (state.times.indexOf(times[i].value) != -1);
             }
         }
         
