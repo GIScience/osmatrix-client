@@ -4,8 +4,7 @@ var Ui = (function (w) {
     var $ = w.jQuery,
         d3 = w.d3,
         TOOLS = {geolocate: 'geolocate', layer: 'layer', geocode: 'searchPlace', legend: 'legend', featureInfo: 'featureInfo', message: 'message' },
-        theInterface,
-		attributes;
+        theInterface;
     
     
     
@@ -41,6 +40,8 @@ var Ui = (function (w) {
 		$('.tool > .content').not('#' + tool + ' > .content').removeClass('active');
         $('#sidebar').removeClass('active');
         
+        
+        console.log($('#' + tool));
         $('#' + tool).toggleClass('active');
 		$('#' + tool + ' > button').toggleClass('active');
 		$('#' + tool + ' > .content').toggleClass('active');
@@ -77,7 +78,7 @@ var Ui = (function (w) {
         $('#' + TOOLS.message).removeClass().addClass(type);
         $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
         $('#' + TOOLS.message + ' p').text(text);
-        $('#' + TOOLS.message + ' #actions > button').click(hideMessage);
+        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
         $('#' + TOOLS.message).show();
     }
     
@@ -132,8 +133,7 @@ var Ui = (function (w) {
 	 * @param  {[type]} results [description]
 	 */
 	function updateGeocodeResultList(permaLink, results) {
-//        var queryParams = '?' + permaLink.split('?')[1] || '',
-        var queryParams = permaLink.split('?')[1],
+        var queryParams = '?' + permaLink.split('?')[1] || '',
             linkBase = ((permaLink.indexOf('?') !== -1) ? permaLink.substring(0, permaLink.indexOf('?')) : permaLink.substring(0)).split('#')[0],
             mapState = ((permaLink.indexOf('?') !== -1) ? permaLink.substring(0, permaLink.indexOf('?')) : permaLink.substring(0)).split('#')[1].split('/');
         
@@ -147,7 +147,7 @@ var Ui = (function (w) {
                     mapState[mapState.length - 2] = parseFloat(address.lon);
                     
                     var address = results[i];
-                    var link = linkBase + "#" + mapState.join("/") + (queryParams ? '?' + queryParams : '');
+                    var link = linkBase + "#" + mapState.join("/") + queryParams;
                     
                     $('#' + TOOLS.geocode + ' ul.resultList').append('<li><a href="' + link + '">' + address.display_name + '</a></li>');
                 }
@@ -202,55 +202,27 @@ var Ui = (function (w) {
 		   	}
 	    }
     }
-	
-	function handleAttributeChange(e) {
-		var attributeId;
-		for (var i = 0, len = attributes.length; i < len; i++) {
-			if (attributes[i].name === e.target.value) {attributeId = attributes[i].validfrom; break; }
-		}
-		
-		var checkboxes = $('#' + TOOLS.layer + ' input[name="timestamp"]');
-		var selectedTimes = [];
-		
-		for (var i = 0, len = checkboxes.length; i < len; i++) {
-			if (checkboxes[i].value < attributeId) {
-				if (checkboxes[i].checked) {selectedTimes.push(parseInt(checkboxes[i].value)); }
-				checkboxes[i].checked = false; 
-				$(checkboxes[i]).attr('disabled', 'disabled'); 
-			} else {
-				$(checkboxes[i]).removeAttr('disabled'); 
-				if (selectedTimes[0] && 
-					selectedTimes[0] < attributeId && 
-					parseInt(checkboxes[i].value) === attributeId) {$(checkboxes[i]).attr('checked', 'checked'); }
-				
-				if (selectedTimes[1] && 
-					selectedTimes[1] <= attributeId && 
-					i + 1 === len) {$(checkboxes[i]).attr('checked', 'checked'); }
-			}
-		}
-	}
     
     function initializeLayerSwitcher(c) {
-		attributes = c.attributes;
         for (var i = 0, len = c.attributes.length; i < len; i++) {
             $('#' + TOOLS.layer + ' select#characteristics').append('<option value="' + c.attributes[i].name + '">' + c.attributes[i].title + '</option>');
         }
-		$('#' + TOOLS.layer + ' select#characteristics').change(handleAttributeChange);
 
         for (var i = 0, len = c.timestamps.length; i < len; i++) {
-            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i + 1 < attributes[i].validfrom) ? 'disabled="disabled"' : '') + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + c.timestamps[i].id + '">' + c.timestamps[i].timestamp + '</label>');
+            $('#' + TOOLS.layer + ' fieldset#timestamps').append('<label class="checkbox"><input ' + ((i === len - 1) ? 'checked="checked"' : '') + ' type="checkbox" name="timestamp" value="' + c.timestamps[i].id + '">' + c.timestamps[i].timestamp + '</label>');
         }
+
         $('#' + TOOLS.layer + ' input[name="timestamp"]').change(handleTimeStampChange);
     }
     
     function setLayerSwitcherToMode(state) {
         if (state) {
             $('#' + TOOLS.layer + ' .btn-group button[value="' + state.mode + '"]').click();
-            $('#' + TOOLS.layer + ' select#characteristics').val(state.layer).change();
+            $('#' + TOOLS.layer + ' #characteristics').val(state.layer);
     
             var times = $('#' + TOOLS.layer + ' input[name="timestamp"]');
             for (var i = 0, len = times.length; i < len; i++) {
-				times[i].checked = (state.times.indexOf(times[i].value) != -1);
+              times[i].checked = (state.times.indexOf(times[i].value) != -1);
             }
         }
         
@@ -277,11 +249,12 @@ var Ui = (function (w) {
                 layer: layer,
                 times: times
             });
-			if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
     	} else {
     		displayMessage("warning", "Please select two timestamps for comparison.");
     	}
-		
+        
+        if ($('#' + TOOLS.layer + ' > button').hasClass('active')) {$('#' + TOOLS.layer + ' > button').click(); }
+        
     	return false;
     }
     
@@ -343,6 +316,8 @@ var Ui = (function (w) {
             for (var key in info.stats) {
                 min = d3.min([info.stats[key].min, min]);
                 max = d3.max([info.stats[key].max, max]);
+		console.log("min: " + min + " max: "+ max)
+
             }
             
             if (info.attribute === 'DateOfLatestEdit' || info.attribute === 'dateOfEldestEdit') {MARGIN_LEFT += 20; }
