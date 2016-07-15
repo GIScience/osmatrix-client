@@ -4,7 +4,8 @@ var OSMatrix = (function (w) {
     var $ = w.jQuery,
 //        PROXY_URL = "/cgi-bin/proxy.cgi?url=",
     PROXY_URL = "",
-        API_URL = "http://alborz.geog.uni-heidelberg.de:50684/osmatrix/",
+        // !!! PLEASE SET YOUR SERVER URL BELOW !!!
+        API_URL = "http://localhost:50684/osmatrix/",
         MODE = {
             timestamp: 1,
             diff: 2

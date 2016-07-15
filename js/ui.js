@@ -78,7 +78,7 @@ var Ui = (function (w) {
         $('#' + TOOLS.message).removeClass().addClass(type);
         $('#' + TOOLS.message + ' h3').text(type.charAt(0).toUpperCase() + type.slice(1));
         $('#' + TOOLS.message + ' p').text(text);
-        $('#' + TOOLS.message + ' > #actions > button').click(hideMessage);
+        $('#' + TOOLS.message + ' #actions > button').click(hideMessage);
         $('#' + TOOLS.message).show();
     }
     
