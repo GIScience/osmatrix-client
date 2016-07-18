@@ -17,7 +17,8 @@ var Geocoder = (function (window) {
 	 */
 	function find(address, callback) {
 		$.getJSON(
-			'/cgi-bin/proxy.cgi?url=' + encodeURIComponent(NOMINATIM_URL + '&q=' + address.replace(/\s+/g, '+')),
+			//'/cgi-bin/proxy.cgi?url=' + encodeURIComponent(NOMINATIM_URL + '&q=' + address.replace(/\s+/g, '+')),
+			NOMINATIM_URL+ '&q=' + address.replace(/\s+/g, '+'),
 			null,
 			callback
 		);

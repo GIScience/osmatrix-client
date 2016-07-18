@@ -29,6 +29,8 @@
     
     <!--   D3    -->
     <script src="js/lib/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> -->
+    <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
 </head>
 
 <body>
@@ -95,11 +97,18 @@
     <div id="sidebar">
         <div id="about" class="tool">
             <div class="content">
+	      
+
+	      <a href="http://www.geog.uni-heidelberg.de/gis/cap4access_\en.html" target="_blank"><img src="img/myaccessibleeu.png" style="width:350px;height:48px;"></a> 
+	      <h2>OSMatrix for Accessibility</h2>
+
+		<p>This tool provides aggregated statistics of OpenStreetMap data completeness (at attribute level) regarding sidewalk information such as sidewalk width, incline, surface texture and smoothness. The tool is aimed to be used for the assessment of OSM data quality for the purpose of routing and navigation of people with limited mobility (more info: <a href="http://www.geog.uni-heidelberg.de/gis/cap4access_en.html" target="_blank"> CAP4Access project</a>). The tool is an extended version of OSMatrix.</p>
+		<p>Extension developed by <b>Amin Mobasheri</b> and <b>Lukas Loos</b></p>
                 <h2>About OSMatrix</h2>
                 <p>OSMatrix is a web-based application to visualize characteristics of OpenStreetMap, which are usually not displayed in cartographic representations of the data. The characteristics include information on the topicality of data, user contributions and the presence (or absence) of certain feature types.</p>
                 
-                <p>OSMatrix is based on an idea of Alexander Zipf has been brought to life by Lukas Loos and Oliver Roick at <a href="http://www.geog.uni-heidelberg.de/lehrstuehle/gis/index_en.html">GIScience Research Group</a> at Heidelberg University.</p>
-                
+                <p>OSMatrix is based on an idea of <b>Alexander Zipf</b> has been brought to life by <b>Lukas Loos</b> and <b>Oliver Roick</b> at <a href="http://www.geog.uni-heidelberg.de/lehrstuehle/gis/index_en.html" target="_blank">GIScience Research Group</a> at Heidelberg University.</p>
+                <a href="http://www.geog.uni-heidelberg.de/gis/index_en.html" target="_blank"><img src="img/giscience_logo.png" style="width:200px;height:159px;"></a>
                 <h3>Publications</h3>
                 <ul class="publications">
                     <li>Roick, O.; Loos, L.; Zipf, A. (2012): A Technical Framework for Visualizing Spatio-temporal Quality Metrics of Volunteered Geographic Information. Geoinformatik 2012, Braunschweig, March 2012.</li>
@@ -107,7 +116,7 @@
                 </ul>
                 
                 <h3>Want to help?</h3>
-                <p>Help us improve OSMatrix by <a href="https://github.com/GIScience/osmatrix-client/issues">reporting issues on Github</a> or get in touch with us via <a href="http://www.geog.uni-heidelberg.de/personen/gis_roick_en.html">e-mail</a> or <a href="http://twitter.com/oliverroick">Twitter</a>.</p>
+                <p>Help us improve OSMatrix by <a href="https://github.com/oliverroick/osmatrix-client/issues" target="_blank">reporting issues on Github</a> or get in touch with us via <a href="http://www.geog.uni-heidelberg.de/personen/gis_loos_en.html" target="_blank">e-mail</a> </p>
             </div>
             <button></button>
         </div>
@@ -154,5 +163,19 @@
 <script type="text/javascript" src="js/map.js"></script>
 <script type="text/javascript" src="js/ui.js"></script>
 <script type="text/javascript" src="js/control.js"></script>
+
+<!-- Piwik -->
+  <!-- <script type="text/javascript"> -->
+  <!--   var pkBaseURL = (("https:" == document.location.protocol) ? "https://129.206.74.245:8010/" : "http://129.206.74.245:8010/"); -->
+  <!--   document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E")); -->
+  <!-- </script><script type="text/javascript"> -->
+  <!--  try  -->
+  <!--  { -->
+  <!--    var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 7); -->
+  <!--    piwikTracker.trackPageView(); -->
+  <!--    piwikTracker.enableLinkTracking(); -->
+  <!--  } catch( err ) {} -->
+  <!-- </script> -->
+  <!-- End Piwik Code -->
 
 </html>
