@@ -39,4 +39,4 @@ var EventEmitter = (function () {
 	eventEmitter.prototype.emit = emit;
 
 	return eventEmitter;
-}());
+})();

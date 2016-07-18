@@ -46,7 +46,7 @@ var Map = (function () {
         }
 
 		this.theMap = L.map(container, {
-            center: [51.505, -0.09],
+            center: [49.505, 8.09],
             zoom: 9,
 //            minZoom: 3,
 //            maxZoom: 18,

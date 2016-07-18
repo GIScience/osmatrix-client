@@ -2,8 +2,10 @@ var OSMatrix = (function (w) {
     "use strict";
     
     var $ = w.jQuery,
-        PROXY_URL = "/cgi-bin/proxy.cgi?url=",
-        API_URL = "http://lemberg.geog.uni-heidelberg.de:50684/osmatrix/",
+//        PROXY_URL = "/cgi-bin/proxy.cgi?url=",
+    PROXY_URL = "",
+        // !!! PLEASE SET YOUR SERVER URL BELOW !!!
+        API_URL = "http://localhost:50684/osmatrix/",
         MODE = {
             timestamp: 1,
             diff: 2
@@ -15,7 +17,9 @@ var OSMatrix = (function (w) {
     
     function get(url, callback) {
         $.getJSON(
-			PROXY_URL + encodeURIComponent(url),
+//			PROXY_URL + encodeURIComponent(url),
+			url,
+
 			null,
 			callback
 		);
