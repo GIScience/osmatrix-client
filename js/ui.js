@@ -294,8 +294,10 @@ var Ui = (function (w) {
         if (info && colors) {
             $('#' + TOOLS.featureInfo + ' h3').text(info.attribute.title);
             $('#' + TOOLS.featureInfo + ' p').text(info.attribute.description);
-            
+                   
+          // variable declarations
             var chartArea,
+            	tooltip,
                 WIDTH = $('#' + TOOLS.featureInfo + ' #chart').width(),
                 HEIGHT = $('#' + TOOLS.featureInfo + ' #chart').height(),
                 MARGIN_TOP = 10,
@@ -310,30 +312,57 @@ var Ui = (function (w) {
                         .x(function(d) {return xScale(d.timestamp); })
                         .y0(function(d) {return yScale(d.lower); })
                         .y1(function(d) {return yScale(d.upper); }),
+            	
                 averages = [],
                 stddev = [];
-            
+                
+  	          	
+            	// iterating through a dataset or arrays
             for (var key in info.stats) {
                 min = d3.min([info.stats[key].min, min]);
                 max = d3.max([info.stats[key].max, max]);
-		console.log("min: " + min + " max: "+ max)
-
+		console.log("min: " + min + " max: "+ max);
             }
             
-            if (info.attribute === 'DateOfLatestEdit' || info.attribute === 'dateOfEldestEdit') {MARGIN_LEFT += 20; }
-                else {min = 0; }
+            if (info.attribute === 'DateOfLatestEdit' || info.attribute === 'dateOfEldestEdit') 
+            		{
+            			MARGIN_LEFT += 20; 
+            		}
+                else 
+                	{
+                		min = 0; 
+                	}
             
             for (var i = 0, len = info.timestamps.length; i < len; i++) {
                 xDomain.push(info.timestamps[i].timestamp.substring(0, info.timestamps[i].timestamp.lastIndexOf('-')));
             }
             
-            xScale = d3.scale.ordinal().domain(xDomain).rangePoints([MARGIN_LEFT + 10, WIDTH - 20]);
-            yScale = d3.scale.linear().domain([max,	min]).range([MARGIN_TOP + 10, (HEIGHT - MARGIN_BOTTOM)]);
             
-            chartArea = d3.select("div#chart").append("svg")
+            // scales, domain and ranges to adjust our visualization to match our data..........
+            // D3 ...scales are represented using domain and ranges
+            // variable xScale & yScale
+            xScale = d3.scale.ordinal()
+	            .domain(xDomain)
+	            .rangePoints([MARGIN_LEFT + 10, WIDTH - 20]);
+            yScale = d3.scale.linear()
+	            .domain([max,	min])
+	            .range([MARGIN_TOP + 10, (HEIGHT - MARGIN_BOTTOM)]);
+            
+            
+            // chartArea .... generate SVG element...
+            chartArea = d3.select("div#chart")
+            	.append("svg")
                 .attr("width", WIDTH)
                 .attr("height", HEIGHT);
-            
+                  
+           tooltip = d3.select("div#chart")
+				.append("div")
+				.style("position", "absolute")
+				.style("font-family", "'Open Sans', sans-serif")
+				.style("font-size", "16px")
+				.style("z-index", "10")
+				.style("visibility", "hidden");
+			           
             // **********************
             // PLOT STATISTICAL MEASURES
             
@@ -342,11 +371,14 @@ var Ui = (function (w) {
                 stddev.push({"timestamp": key, "upper": info.stats[key].avg + info.stats[key].std, "lower": info.stats[key].avg - info.stats[key].std});
             }
             
+            
+            // svg path to create standard deviation area
             chartArea.append("svg:path")
                   .datum(stddev)
                   .attr("fill", '#f0f0f0')   
                   .attr("d", stddevArea);
             
+            // svg path to create averages lines
             chartArea.append("svg:path")
                     .attr("d", line(averages))
                     .attr("stroke", '#bbb')
@@ -357,7 +389,7 @@ var Ui = (function (w) {
             // **********************
             // PREPARE THE CHART AREA
             
-            
+            // dynamic vertical rule 
             chartArea.selectAll(".yRule")
                     .data(yScale.ticks(5))
                 .enter().append("line")
@@ -367,7 +399,8 @@ var Ui = (function (w) {
                     .attr("y1", yScale)
                     .attr("y2", yScale)
                     .style("stroke", "#ccc");
-                    
+        
+        // add axes ... svg line element
             chartArea.append("svg:line")
                     .attr("class", "yBase")
                     .attr("x1", MARGIN_LEFT)
@@ -376,7 +409,8 @@ var Ui = (function (w) {
                     .attr("y2", (HEIGHT - MARGIN_BOTTOM))
                     .style("stroke", "#000")
                     .style("stroke-width", "1");
-            
+           
+           // add label by adding text elements to SVG element
             chartArea.selectAll(".yLabel")
                     .data(yScale.ticks(5))
                 .enter().append("svg:text")
@@ -392,9 +426,10 @@ var Ui = (function (w) {
                     })
                     .attr("x", MARGIN_LEFT - 10)
                     .attr("y", yScale)
-                    .attr("text-anchor", "end");
-            
-            
+                    .attr("text-anchor", "end")
+            		.attr("font-size", "14");
+           				
+            // add axes ... svg line element
             chartArea.selectAll(".xTicks")
                     .data(xDomain)
                 .enter().append("svg:line")
@@ -405,6 +440,9 @@ var Ui = (function (w) {
                     .attr("y2", HEIGHT - MARGIN_BOTTOM + 5)
                     .style("stroke", "#000");
     
+    			
+    				
+      		  // add label by adding text elements to SVG element			
             chartArea.selectAll(".xLabel")
                     .data(xDomain)
                 .enter().append("svg:text")
@@ -413,21 +451,21 @@ var Ui = (function (w) {
                     .attr("x", function(d) {return xScale(d);})
                     .attr("y", HEIGHT - MARGIN_BOTTOM + 10)
                     .attr("text-anchor", "top")
-                    .attr("style", "writing-mode: tb;");
-            
-            
-            
+                    .attr("style", "writing-mode: tb;")
+            		.attr("font-size", "14");
+
+			  
             // **********************
             // PLOT THE GRAPH
             
             for (var i = 0, len = info.result.length; i < len; i++) {
                 var item = info.result[i],
                     value = [];
-                
+               // console.log(info.result);
                 for (var key in item.values) {
                     value.push({"timestamp": key, "value": item.values[key]});
                 }
-                
+                console.log(value);
                 chartArea.append("svg:path")
                     .attr("d", line(value))
                     .attr("stroke", colors[i])
@@ -438,12 +476,28 @@ var Ui = (function (w) {
                     .attr("class", "path" + item.cell_id)
                     .attr("cx", function(d) {return xScale(d.timestamp.substring(0, d.timestamp.lastIndexOf('-'))); })
                     .attr("cy", function(d) {return yScale(d.value); })			
-                    .attr("r", 3)		
+                    .attr("r", 5)		
                     .attr("fill", "#ffffff")
                     .attr("stroke", colors[i])
-                    .attr("stroke-width", 2);
-            }
-            
+                    .attr("stroke-width", 2)
+                    
+                    // testing event listeners
+                    
+                    .on("mouseover", function(d){
+						return tooltip.style("visibility", "visible").text(d.timestamp + " :  " + d.value);
+					})
+					.on("mousemove", function(d){
+						return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.timpestamp + " :  " + d.value);
+					})
+					.on("mouseout", function(d){
+						return tooltip.style("visibility", "hidden");
+					});
+                  
+               }
+                      
+				   
+				           
+           
             // **********************
             // OPEN THE THING, YO!
             
@@ -451,6 +505,7 @@ var Ui = (function (w) {
         } else {
             $('#' + TOOLS.featureInfo + ' h3').text('');
             $('#' + TOOLS.featureInfo + ' p').text('Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.');
+       		
         }
         setLoadingState(false, TOOLS.featureInfo);
     }
