@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" />
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" media="all">
     <link rel="stylesheet" type="text/css" href="style.css" media="all">
-	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css" rel="stylesheet" type="text/css">
     
     <!--   JQUERY    -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
@@ -25,12 +25,16 @@
 	    <link rel="stylesheet" href="js/lib/leaflet-0.5.1.ie.css">
 	<![endif]-->
     
-    
-    
     <!--   D3    -->
-    <script src="js/lib/d3.v3.min.js" charset="utf-8"></script>
+   <!-- <script src="js/lib/d3.v3.min.js" charset="utf-8"></script>  -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> -->
     <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+    
+    <!-- These belongs to the HTML file where you want C3 to work - put these lines into your <head> tag -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+ 
+  
 </head>
 
 <body>
@@ -39,8 +43,8 @@
         <p>initializing...</p>
     </header>
 	
-	<section id="map"></section>
-    
+	<section id="map">
+		</section>
 	<div id="toolbox">
         
         <h2></h2>
@@ -121,6 +125,8 @@
                 <h3></h3>
                 <p>Click on the map to get information on the temporal evolution of the selected characteristic in the area of interest.</p>
                 <div id="chart"></div>
+                <br />
+                <br />
             </div>
             <button></button>
             <div class="spinner"></div>
@@ -134,7 +140,7 @@
                 <div id="labels"></div>
             </div>
             <button></button>
-        </div>
+        </div>  
     </div>
     
     <div id="message">
@@ -146,6 +152,7 @@
             </div>
         </div>
     </div>
+ 
 </body>
 
 <!--<script type="text/javascript" src="build/osmatrix.min.js"></script>-->

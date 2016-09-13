@@ -400,8 +400,8 @@ div#searchPlace > div.content > ul.resultList {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 380px;
-	left: -380px;
+	width: 480px;
+	left: -480px;
 	
 	border-right: 1px solid rgba(0,0,0,0.4);
 	background-color: #fff;
@@ -441,11 +441,11 @@ div#sidebar ul {
 }
 
 	#sidebar .content {
-		width: 350px;
+		width: 450px;
 		padding: 10px 15px;
 		position: absolute;
 		top: 0;
-		left: -380px;
+		left: -480px;
 		bottom: 0;
 		overflow: hidden;
 		
@@ -469,7 +469,7 @@ div#sidebar div.tool > div.spinner {
 	-webkit-border-radius: 0 0 5px 5px;
 	border-radius: 0 5px 5px 0;
 	position: absolute;
-	left: 381px;
+	left: 481px;
 	margin-left: -1px;
 	
 	border-width: 1px 1px 1px 0;
@@ -533,7 +533,7 @@ div#sidebar div.tool > div.spinner {
 }
 
 div#sidebar.active div.tool > div.spinner {
-	left: 381px;
+	left: 481px;
 }
 
 div#sidebar div.tool > div.spinner.loading {
