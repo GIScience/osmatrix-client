@@ -349,10 +349,10 @@ var Ui = (function (w) {
 						      ts["cell_" + j] = info.result[j].values[ts["ts"]];
 						    }
 						    
+						   
+						    ts["cell_avg"] = (info.stats[ts["ts"]].avg != null) ? parseFloat(info.stats[ts["ts"]].avg.toFixed(2)) : null;
 						    
-						    ts["cell_avg"] = parseFloat(info.stats[ts["ts"]].avg.toFixed(2));
-						    
-						    ts["cell_std"] = parseFloat(info.stats[ts["ts"]].std.toFixed(2));
+						    ts["cell_std"] = (info.stats[ts["ts"]].std != null) ? parseFloat(info.stats[ts["ts"]].std.toFixed(2)) : null;
 						    
 						    
 						    out.push(ts);
