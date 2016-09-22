@@ -411,7 +411,7 @@ var Ui = (function (w) {
 										  },
 										  tooltip: {
 											  position: function (data, width, height, element) {
-											    return {top: 0, left: 355};
+											    return {top: 250, left: 40};
 											  }
 											}
 										});  
