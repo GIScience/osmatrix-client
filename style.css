@@ -304,6 +304,7 @@ div#toolbox {
 				-webkit-border-radius: 0 0 5px 5px;
 				border-radius: 0 0 5px 5px;
 				border-width: 0 1px 1px 1px;
+				overflow-y: scroll;
 			}
 
 /* @group Search Place */
