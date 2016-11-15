@@ -386,6 +386,11 @@ div#searchPlace > div.content > ul.resultList {
 		cursor: pointer;
 	}
 
+#layer #timestamps {
+    -moz-columns: 3 auto;
+    -webkit-columns: 3 auto;
+    columns: 3 auto;
+}
 
 
 /* @end */
