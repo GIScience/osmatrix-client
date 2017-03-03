@@ -390,6 +390,8 @@ div#searchPlace > div.content > ul.resultList {
     -moz-columns: 3 auto;
     -webkit-columns: 3 auto;
     columns: 3 auto;
+    overflow-y: auto;
+    max-height: 360px;
 }
 
 
