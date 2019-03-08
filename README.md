@@ -1,3 +1,5 @@
+# This repository is no longer maintained!
+
 # OSMatrix
 
 OSMatrix is a web-based application to visualize characteristics of OpenStreetMap, which are usually not displayed in cartographic representations of the data. The characteristics include information on the topicality of data, user contributions and the presence (or absence) of certain feature types.
